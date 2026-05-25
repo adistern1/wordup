@@ -11,7 +11,6 @@ html {
   min-height: 100%;
   background: linear-gradient(160deg, #120a2e 0%, #1e1050 45%, #0d1a3a 100%);
 }
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: #fff;
@@ -19,155 +18,154 @@ body {
   background: transparent;
 }
 
-/* screens */
 .screen { display: none; }
 .screen.on {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding: 0 18px 28px;
+  display: flex; flex-direction: column; align-items: center;
+  min-height: 100vh; padding: 0 18px 28px;
 }
 
 /* ── HOME ── */
-#s-home { padding-top: 36px; gap: 0; }
+#s-home { padding-top: 36px; }
 
-.title-block { text-align: center; margin-bottom: 28px; }
 .title {
-  font-size: 52px; font-weight: 900; letter-spacing: -2px;
+  font-size: 50px; font-weight: 900; letter-spacing: -2px; text-align: center;
   background: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-.subtitle { font-size: 15px; color: rgba(255,255,255,0.45); margin-top: 3px; }
+.subtitle { font-size: 14px; color: rgba(255,255,255,0.45); text-align: center; margin-top: 3px; margin-bottom: 28px; }
 
-.prog-section {
-  display: flex; flex-direction: column; align-items: center; gap: 18px;
-  flex: 1; justify-content: center; width: 100%;
-}
+.prog-section { display:flex; flex-direction:column; align-items:center; gap:16px; flex:1; justify-content:center; width:100%; }
 
-.ring-wrap { position: relative; width: 160px; height: 160px; }
-.ring-wrap svg { display: block; transform: rotate(-90deg); }
-.ring-bg   { fill: none; stroke: rgba(255,255,255,0.09); stroke-width: 12; }
-.ring-fill { fill: none; stroke: url(#rg); stroke-width: 12; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+.ring-wrap { position:relative; width:154px; height:154px; }
+.ring-wrap svg { display:block; transform:rotate(-90deg); }
+.ring-bg   { fill:none; stroke:rgba(255,255,255,0.09); stroke-width:12; }
+.ring-fill { fill:none; stroke:url(#rg); stroke-width:12; stroke-linecap:round; transition:stroke-dashoffset 1s ease; }
 .ring-center {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position:absolute; top:0; left:0; right:0; bottom:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
 }
-.ring-n   { font-size: 38px; font-weight: 900; color: #c084fc; line-height: 1; }
-.ring-lbl { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+.ring-n   { font-size:36px; font-weight:900; color:#c084fc; line-height:1; }
+.ring-lbl { font-size:11px; color:rgba(255,255,255,0.4); margin-top:3px; }
 
-.legend { display: flex; gap: 16px; }
-.leg { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); }
-.ldot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.legend { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+.leg { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; }
+.ldot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
 
-.home-btns {
-  display: flex; flex-direction: column; gap: 12px;
-  width: 100%; max-width: 300px; margin-top: 32px;
-}
+.home-btns { display:flex; flex-direction:column; gap:11px; width:100%; max-width:300px; margin-top:28px; }
 
 .btn-play {
-  padding: 19px; border: none; border-radius: 18px;
-  background: linear-gradient(135deg, #7c3aed, #4338ca);
-  color: #fff; font-size: 20px; font-weight: 800; cursor: pointer;
-  box-shadow: 0 8px 28px rgba(124,58,237,0.5);
-  transition: transform .12s, box-shadow .12s;
+  padding:18px; border:none; border-radius:18px;
+  background:linear-gradient(135deg,#7c3aed,#4338ca);
+  color:#fff; font-size:20px; font-weight:800; cursor:pointer;
+  box-shadow:0 8px 28px rgba(124,58,237,0.5);
+  transition:transform .12s;
 }
-.btn-play:active { transform: scale(0.97); }
+.btn-play:active { transform:scale(0.97); }
 
 .btn-sec {
-  padding: 13px; border: none; border-radius: 14px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: rgba(255,255,255,0.6); font-size: 15px; font-weight: 600; cursor: pointer;
+  padding:12px; border:none; border-radius:14px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  color:rgba(255,255,255,0.6); font-size:14px; font-weight:600; cursor:pointer;
 }
 
 /* ── GAME ── */
-#s-game { padding-top: 18px; justify-content: flex-start; }
+#s-game { padding-top:16px; justify-content:flex-start; }
 
 .g-top {
-  display: flex; align-items: center; justify-content: space-between;
-  width: 100%; margin-bottom: 12px;
+  display:flex; align-items:center; justify-content:space-between;
+  width:100%; margin-bottom:10px;
 }
-.g-learned { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.65); }
-.g-learned strong { color: #c084fc; font-size: 17px; }
-.g-remain  { font-size: 13px; color: rgba(255,255,255,0.38); }
+.g-learned { font-size:14px; font-weight:700; color:rgba(255,255,255,0.65); }
+.g-learned strong { color:#c084fc; font-size:17px; }
+.g-remain  { font-size:12px; color:rgba(255,255,255,0.38); }
 
-.gbar-wrap { width:100%; height:6px; background:rgba(255,255,255,0.08); border-radius:3px; margin-bottom:22px; overflow:hidden; }
-.gbar { height:100%; background: linear-gradient(90deg,#10b981,#c084fc); border-radius:3px; transition:width .6s ease; min-width:3px; }
+.gbar-wrap { width:100%; height:5px; background:rgba(255,255,255,0.08); border-radius:3px; margin-bottom:16px; overflow:hidden; }
+.gbar { height:100%; background:linear-gradient(90deg,#10b981,#c084fc); border-radius:3px; transition:width .6s ease; min-width:3px; }
 
+/* word card */
 .wcard {
-  width: 100%;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 26px; padding: 28px 20px;
-  text-align: center; margin-bottom: 20px;
+  width:100%;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:24px; padding:20px 18px 16px;
+  text-align:center; margin-bottom:16px;
 }
-.wc-part { font-size: 11px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
-.wc-word { font-weight: 900; line-height: 1.1; direction: ltr; }
-.hit-dots { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
-.hdot {
-  width: 12px; height: 12px; border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.25); transition: all .3s;
-}
-.hdot.on { background: #c084fc; border-color: #c084fc; box-shadow: 0 0 8px #c084fc88; }
+.wc-emoji { font-size:48px; line-height:1; margin-bottom:6px; }
+.wc-part  { font-size:10px; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
+.wc-word  { font-weight:900; line-height:1.1; direction:ltr; }
 
-.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; width: 100%; }
-.opt {
-  padding: 20px 10px; min-height: 68px;
-  border: 2px solid rgba(255,255,255,0.12);
-  border-radius: 18px;
-  background: rgba(255,255,255,0.055);
-  color: #fff; font-size: 16px; font-weight: 700;
-  cursor: pointer; transition: all .12s; line-height: 1.3;
+.hint-box {
+  margin-top:10px;
+  background:rgba(192,132,252,0.1);
+  border:1px solid rgba(192,132,252,0.2);
+  border-radius:12px; padding:8px 12px;
+  font-size:13px; color:rgba(255,255,255,0.82);
+  line-height:1.5; text-align:right;
+  direction:rtl;
 }
-.opt:active { transform: scale(0.96); }
-.opt.ok  { background: rgba(16,185,129,.22); border-color: #10b981; animation: opop .35s; }
-.opt.bad { background: rgba(239,68,68,.22);  border-color: #ef4444; animation: oshk .4s; }
-.opt.rev { background: rgba(16,185,129,.14); border-color: rgba(16,185,129,.5); }
+
+.hit-dots { display:flex; justify-content:center; gap:10px; margin-top:12px; }
+.hdot {
+  width:11px; height:11px; border-radius:50%;
+  border:2px solid rgba(255,255,255,0.25); transition:all .3s;
+}
+.hdot.on { background:#c084fc; border-color:#c084fc; box-shadow:0 0 7px #c084fc88; }
+
+/* options */
+.opts { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; }
+.opt {
+  padding:17px 8px; min-height:62px;
+  border:2px solid rgba(255,255,255,0.12);
+  border-radius:16px;
+  background:rgba(255,255,255,0.055);
+  color:#fff; font-size:15px; font-weight:700;
+  cursor:pointer; transition:all .12s; line-height:1.3;
+}
+.opt:active { transform:scale(0.96); }
+.opt.ok  { background:rgba(16,185,129,.22); border-color:#10b981; animation:opop .35s; }
+.opt.bad { background:rgba(239,68,68,.22);  border-color:#ef4444; animation:oshk .4s; }
+.opt.rev { background:rgba(16,185,129,.14); border-color:rgba(16,185,129,.5); }
 
 @keyframes opop { 0%{transform:scale(1)} 50%{transform:scale(1.07)} 100%{transform:scale(1)} }
 @keyframes oshk { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-7px)} 75%{transform:translateX(7px)} }
 
 /* mastered flash */
 .mflash {
-  position: fixed; top:0; left:0; right:0; bottom:0; z-index: 50;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: rgba(16,185,129,0.1);
-  pointer-events: none; opacity: 0; transition: opacity .2s;
+  position:fixed; top:0; left:0; right:0; bottom:0; z-index:50;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:rgba(16,185,129,0.1);
+  pointer-events:none; opacity:0; transition:opacity .2s;
 }
-.mflash.on { opacity: 1; }
+.mflash.on { opacity:1; }
 .mbadge {
-  background: linear-gradient(135deg,#10b981,#059669);
-  border-radius: 22px; padding: 18px 36px;
-  font-size: 26px; font-weight: 900;
-  box-shadow: 0 12px 40px rgba(16,185,129,.45);
-  animation: bigpop .3s ease;
+  background:linear-gradient(135deg,#10b981,#059669);
+  border-radius:20px; padding:16px 32px;
+  font-size:24px; font-weight:900;
+  box-shadow:0 12px 40px rgba(16,185,129,.45);
+  animation:bigpop .3s ease;
 }
 @keyframes bigpop { 0%{transform:scale(.4);opacity:0} 70%{transform:scale(1.08)} 100%{transform:scale(1)} }
 
-/* ── WIN ── */
-#s-win { justify-content: center; gap: 22px; padding-top: 40px; }
-.wtrophy { font-size: 86px; animation: bounce 1.5s infinite; }
-@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
-.wtitle { font-size: 34px; font-weight: 900; text-align: center; }
-.wsub   { font-size: 15px; color: rgba(255,255,255,0.55); text-align: center; }
-.wstats { display: flex; gap: 24px; }
-.wstat  { text-align: center; }
-.wstat .n { font-size: 32px; font-weight: 900; }
-.wstat .l { font-size: 12px; color: rgba(255,255,255,0.45); }
+/* WIN */
+#s-win { justify-content:center; gap:20px; padding-top:40px; }
+.wtrophy { font-size:82px; animation:bounce 1.5s infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-13px)} }
+.wtitle { font-size:32px; font-weight:900; text-align:center; }
+.wsub   { font-size:14px; color:rgba(255,255,255,0.55); text-align:center; }
+.wstats { display:flex; gap:24px; }
+.wstat  { text-align:center; }
+.wstat .n { font-size:30px; font-weight:900; }
+.wstat .l { font-size:11px; color:rgba(255,255,255,0.45); }
 .btn-again {
-  padding: 17px 38px; border: none; border-radius: 18px;
-  background: linear-gradient(135deg,#7c3aed,#4338ca);
-  color: #fff; font-size: 18px; font-weight: 800; cursor: pointer;
-  box-shadow: 0 8px 28px rgba(124,58,237,.45);
+  padding:16px 36px; border:none; border-radius:16px;
+  background:linear-gradient(135deg,#7c3aed,#4338ca);
+  color:#fff; font-size:18px; font-weight:800; cursor:pointer;
+  box-shadow:0 8px 28px rgba(124,58,237,.45);
 }
 
 /* confetti */
-.cf {
-  position: fixed; border-radius: 2px; pointer-events: none; z-index: 200;
-  animation: cfFall linear forwards;
-}
+.cf { position:fixed; border-radius:2px; pointer-events:none; z-index:200; animation:cfFall linear forwards; }
 @keyframes cfFall { to { transform:translateY(110vh) rotate(720deg); opacity:0; } }
 
 ::-webkit-scrollbar { width:3px; }
@@ -185,26 +183,23 @@ body {
   </defs>
 </svg>
 
-<!-- ══ HOME ══ -->
+<!-- HOME -->
 <div id="s-home" class="screen on">
-  <div class="title-block">
-    <div class="title">WordUp! 🚀</div>
-    <div class="subtitle">לומד מילות אנגלית — כיתה ה'</div>
-  </div>
+  <div class="title">WordUp! 🚀</div>
+  <div class="subtitle">לימוד מילות אנגלית — כיתה ו'</div>
 
   <div class="prog-section">
     <div class="ring-wrap">
-      <svg width="160" height="160" viewBox="0 0 160 160">
-        <circle class="ring-bg"   cx="80" cy="80" r="68"/>
-        <circle class="ring-fill" id="ringFill" cx="80" cy="80" r="68"
-          stroke-dasharray="427.26" stroke-dashoffset="427.26"/>
+      <svg width="154" height="154" viewBox="0 0 154 154">
+        <circle class="ring-bg"   cx="77" cy="77" r="65"/>
+        <circle class="ring-fill" id="ringFill" cx="77" cy="77" r="65"
+          stroke-dasharray="408.41" stroke-dashoffset="408.41"/>
       </svg>
       <div class="ring-center">
         <div class="ring-n"   id="mastN">0</div>
         <div class="ring-lbl">מתוך 103</div>
       </div>
     </div>
-
     <div class="legend">
       <div class="leg"><div class="ldot" style="background:#ef4444"></div><span id="legNew">103 חדשות</span></div>
       <div class="leg"><div class="ldot" style="background:#f59e0b"></div><span id="legAlm">0 כמעט</span></div>
@@ -218,7 +213,7 @@ body {
   </div>
 </div>
 
-<!-- ══ GAME ══ -->
+<!-- GAME -->
 <div id="s-game" class="screen">
   <div class="g-top">
     <div class="g-learned">נלמדו <strong id="gMastN">0</strong>/103 🎓</div>
@@ -227,8 +222,10 @@ body {
   <div class="gbar-wrap"><div class="gbar" id="gbar" style="width:0%"></div></div>
 
   <div class="wcard">
-    <div class="wc-part" id="wcPart"></div>
-    <div class="wc-word" id="wcWord"></div>
+    <div class="wc-emoji" id="wcEmoji">❓</div>
+    <div class="wc-part"  id="wcPart"></div>
+    <div class="wc-word"  id="wcWord"></div>
+    <div class="hint-box" id="hintBox"></div>
     <div class="hit-dots">
       <div class="hdot" id="d0"></div>
       <div class="hdot" id="d1"></div>
@@ -238,98 +235,150 @@ body {
   <div class="opts" id="optsGrid"></div>
 </div>
 
-<!-- mastered flash -->
+<!-- MASTERED FLASH -->
 <div class="mflash" id="mflash">
   <div class="mbadge" id="mbadgeTxt">✅ נלמד!</div>
 </div>
 
-<!-- ══ WIN ══ -->
+<!-- WIN -->
 <div id="s-win" class="screen">
   <div class="wtrophy">🏆</div>
   <div class="wtitle">כל המילים נלמדו! 🎉</div>
-  <div class="wsub">סיימת את כל 103 המילות!</div>
+  <div class="wsub">סיימת את כל 103 המילות — כל הכבוד!</div>
   <div class="wstats">
     <div class="wstat"><div class="n" id="wTot" style="color:#c084fc">103</div><div class="l">מילים</div></div>
     <div class="wstat"><div class="n" id="wOk"  style="color:#10b981">0</div><div class="l">נכון</div></div>
     <div class="wstat"><div class="n" id="wBad" style="color:#ef4444">0</div><div class="l">טעויות</div></div>
   </div>
-  <button class="btn-again" onclick="resetAll(); startGame()">🔄 שחק שוב</button>
-  <button class="btn-sec" style="margin-top:6px;max-width:200px;width:100%" onclick="go('home')">🏠 בית</button>
+  <button class="btn-again" onclick="resetAll();startGame()">🔄 שחק שוב</button>
+  <button class="btn-sec" style="max-width:200px;width:100%;margin-top:6px" onclick="go('home')">🏠 בית</button>
 </div>
 
 <script>
-/* ══ WORDS ══ */
+/* ══ WORD LIST — כל מילה עם אימוג'י + טיפ זיכרון ══ */
 const W = [
-  {en:"above",he:"מעל",p:"מילת יחס"},{en:"address",he:"כתובת",p:"שם עצם"},
-  {en:"after",he:"אחרי",p:"מילת יחס"},{en:"already",he:"כבר",p:"תואר הפועל"},
-  {en:"alone",he:"לבד",p:"תואר"},{en:"another",he:"אחר",p:"תואר"},
-  {en:"arrive",he:"להגיע",p:"פועל"},{en:"ask for",he:"לבקש",p:"פועל"},
-  {en:"at last",he:"סוף סוף",p:"ביטוי"},{en:"ate",he:"אכל",p:"פועל עבר"},
-  {en:"before",he:"לפני",p:"מילת יחס"},{en:"began",he:"התחיל",p:"פועל עבר"},
-  {en:"bought",he:"קנה",p:"פועל עבר"},{en:"bowl",he:"קערה",p:"שם עצם"},
-  {en:"came",he:"בא",p:"פועל עבר"},{en:"carefully",he:"בזהירות",p:"תואר הפועל"},
-  {en:"cheap",he:"זול",p:"תואר"},{en:"comfortable",he:"נוח",p:"תואר"},
-  {en:"competition",he:"תחרות",p:"שם עצם"},{en:"cost",he:"עולה / עלות",p:"פועל / שם עצם"},
-  {en:"could",he:"יכול היה",p:"פועל עזר"},{en:"date",he:"תאריך",p:"שם עצם"},
-  {en:"did",he:"עשה",p:"פועל עבר"},{en:"die",he:"למות",p:"פועל"},
-  {en:"drawing",he:"ציור",p:"שם עצם"},{en:"drew",he:"צייר",p:"פועל עבר"},
-  {en:"drove",he:"נהג",p:"פועל עבר"},{en:"during",he:"במהלך",p:"מילת יחס"},
-  {en:"easier",he:"קל יותר",p:"תואר"},{en:"entry",he:"כניסה",p:"שם עצם"},
-  {en:"even",he:"אפילו",p:"תואר הפועל"},{en:"everywhere",he:"בכל מקום",p:"תואר הפועל"},
-  {en:"expensive",he:"יקר",p:"תואר"},{en:"explorer",he:"חוקר",p:"שם עצם"},
-  {en:"factory",he:"מפעל",p:"שם עצם"},{en:"fill",he:"למלא",p:"פועל"},
-  {en:"finally",he:"לבסוף",p:"תואר הפועל"},{en:"finish",he:"לסיים",p:"פועל"},
-  {en:"flat",he:"שטוח",p:"תואר"},{en:"free",he:"חופשי / חינם",p:"תואר"},
-  {en:"furniture",he:"רהיטים",p:"שם עצם"},{en:"get to",he:"להגיע ל-",p:"פועל"},
-  {en:"go on a trip",he:"לצאת לטיול",p:"ביטוי"},{en:"gold",he:"זהב",p:"שם עצם"},
-  {en:"guide",he:"מדריך",p:"שם עצם"},{en:"had fun",he:"נהנה",p:"ביטוי"},
-  {en:"hate",he:"לשנוא",p:"פועל"},{en:"heavy",he:"כבד",p:"תואר"},
-  {en:"hike",he:"טיול רגלי",p:"שם עצם"},{en:"hill",he:"גבעה",p:"שם עצם"},
-  {en:"invent",he:"להמציא",p:"פועל"},{en:"job",he:"עבודה / תפקיד",p:"שם עצם"},
-  {en:"joke",he:"בדיחה",p:"שם עצם"},{en:"leave",he:"לעזוב",p:"פועל"},
-  {en:"left",he:"עזב",p:"פועל עבר"},{en:"letter",he:"מכתב",p:"שם עצם"},
-  {en:"library",he:"ספרייה",p:"שם עצם"},{en:"lie",he:"לשקר / לשכב",p:"פועל"},
-  {en:"look after",he:"לטפל ב-",p:"פועל"},{en:"look like",he:"להיראות כמו",p:"פועל"},
-  {en:"make a call",he:"לבצע שיחה",p:"ביטוי"},{en:"marry",he:"להתחתן",p:"פועל"},
-  {en:"mean",he:"להתכוון / משמעות",p:"פועל"},{en:"medal",he:"מדליה",p:"שם עצם"},
-  {en:"meeting",he:"פגישה",p:"שם עצם"},{en:"miss",he:"להתגעגע / לפספס",p:"פועל"},
-  {en:"newspaper",he:"עיתון",p:"שם עצם"},{en:"only",he:"רק",p:"תואר הפועל"},
-  {en:"open",he:"פתוח",p:"תואר"},{en:"own",he:"שלו / בבעלותו",p:"תואר"},
-  {en:"person",he:"אדם",p:"שם עצם"},{en:"pocket",he:"כיס",p:"שם עצם"},
-  {en:"price",he:"מחיר",p:"שם עצם"},{en:"prize",he:"פרס",p:"שם עצם"},
-  {en:"ran",he:"רץ",p:"פועל עבר"},{en:"record",he:"שיא / להקליט",p:"שם עצם / פועל"},
-  {en:"reporter",he:"כתב / רפורטר",p:"שם עצם"},{en:"return",he:"לחזור",p:"פועל"},
-  {en:"round",he:"עגול",p:"תואר"},{en:"run away",he:"לברוח",p:"פועל"},
-  {en:"side",he:"צד",p:"שם עצם"},{en:"sign",he:"שלט / סימן",p:"שם עצם"},
-  {en:"simple",he:"פשוט",p:"תואר"},{en:"smart",he:"חכם",p:"תואר"},
-  {en:"smile",he:"חיוך",p:"שם עצם"},{en:"song",he:"שיר",p:"שם עצם"},
-  {en:"start",he:"להתחיל / התחלה",p:"פועל / שם עצם"},{en:"steal",he:"לגנוב",p:"פועל"},
-  {en:"still",he:"עדיין",p:"תואר הפועל"},{en:"street",he:"רחוב",p:"שם עצם"},
-  {en:"student",he:"סטודנט",p:"שם עצם"},{en:"suddenly",he:"פתאום",p:"תואר הפועל"},
-  {en:"swimmer",he:"שחיין",p:"שם עצם"},{en:"terrible",he:"נורא",p:"תואר"},
-  {en:"then",he:"אז",p:"תואר הפועל"},{en:"thief",he:"גנב",p:"שם עצם"},
-  {en:"thousand",he:"אלף",p:"מספר"},{en:"told",he:"סיפר / אמר",p:"פועל עבר"},
-  {en:"view",he:"נוף / מבט",p:"שם עצם"},{en:"visit",he:"לבקר",p:"פועל"},
-  {en:"was born",he:"נולד",p:"ביטוי"},{en:"well",he:"היטב",p:"תואר הפועל"},
-  {en:"went",he:"הלך",p:"פועל עבר"},{en:"win",he:"לנצח",p:"פועל"},
-  {en:"winner",he:"מנצח",p:"שם עצם"},{en:"wrote",he:"כתב",p:"פועל עבר"},
+  {en:"above",       he:"מעל",                p:"מילת יחס",        e:"✈️",  hint:"המטוס טס above = מעל העננים"},
+  {en:"address",     he:"כתובת",              p:"שם עצם",           e:"📮",  hint:"הכתובת כתובה על המעטפה ✉️"},
+  {en:"after",       he:"אחרי",               p:"מילת יחס",        e:"⏩",  hint:"after school = אחרי בית הספר"},
+  {en:"already",     he:"כבר",                p:"תואר הפועל",      e:"✅",  hint:"already done! = כבר גמרתי!"},
+  {en:"alone",       he:"לבד",                p:"תואר",             e:"🧍",  hint:"home alone = לבד בבית"},
+  {en:"another",     he:"עוד אחד / אחר",      p:"תואר",             e:"2️⃣",  hint:"another cookie? = עוד עוגייה?"},
+  {en:"arrive",      he:"להגיע",              p:"פועל",             e:"🚪",  hint:"arrive home = להגיע הביתה"},
+  {en:"ask for",     he:"לבקש",               p:"פועל",             e:"🙋",  hint:"ask for help = לבקש עזרה"},
+  {en:"at last",     he:"סוף סוף",            p:"ביטוי",            e:"🎉",  hint:"סוף השנה... at last! סוף סוף!"},
+  {en:"ate",         he:"אכל",                p:"פועל עבר",         e:"🍽️",  hint:"ate dinner = אכל ארוחה (עבר של eat)"},
+  {en:"before",      he:"לפני",               p:"מילת יחס",        e:"⏮️",  hint:"before school = לפני בית הספר"},
+  {en:"began",       he:"התחיל",              p:"פועל עבר",         e:"🔔",  hint:"began = התחיל (עבר של begin)"},
+  {en:"bought",      he:"קנה",                p:"פועל עבר",         e:"🛒",  hint:"bought shoes = קנה נעליים (עבר של buy)"},
+  {en:"bowl",        he:"קערה",               p:"שם עצם",           e:"🥣",  hint:"קערת cornflakes בבוקר = bowl"},
+  {en:"came",        he:"בא",                 p:"פועל עבר",         e:"🚶",  hint:"came home = בא הביתה (עבר של come)"},
+  {en:"carefully",   he:"בזהירות",            p:"תואר הפועל",      e:"🐢",  hint:"צב הולך לאט ובזהירות = carefully"},
+  {en:"cheap",       he:"זול",                p:"תואר",             e:"🏷️",  hint:"מדבקת מחיר קטנה = cheap = זול"},
+  {en:"comfortable", he:"נוח",                p:"תואר",             e:"🛋️",  hint:"ספה רכה ונוחה = comfortable"},
+  {en:"competition", he:"תחרות",              p:"שם עצם",           e:"🏆",  hint:"מי ינצח? זו competition = תחרות"},
+  {en:"cost",        he:"עולה / עלות",        p:"פועל / שם עצם",   e:"💰",  hint:"how much does it cost? = כמה זה עולה?"},
+  {en:"could",       he:"יכול היה",           p:"פועל עזר",         e:"💪",  hint:"could fly = יכול היה לעוף (עבר של can)"},
+  {en:"date",        he:"תאריך",              p:"שם עצם",           e:"📅",  hint:"what's the date? = מה התאריך היום?"},
+  {en:"did",         he:"עשה",                p:"פועל עבר",         e:"✅",  hint:"did homework = עשה שיעורים (עבר של do)"},
+  {en:"die",         he:"למות",               p:"פועל",             e:"💀",  hint:"plants die without water = צמחים מתים בלי מים"},
+  {en:"drawing",     he:"ציור",               p:"שם עצם",           e:"🎨",  hint:"drawing on the wall = ציור על הקיר"},
+  {en:"drew",        he:"צייר",               p:"פועל עבר",         e:"✏️",  hint:"drew a cat = צייר חתול (עבר של draw)"},
+  {en:"drove",       he:"נהג",                p:"פועל עבר",         e:"🚗",  hint:"drove to school = נהג לבית הספר (עבר של drive)"},
+  {en:"during",      he:"במהלך",              p:"מילת יחס",        e:"⏳",  hint:"during class = במהלך השיעור"},
+  {en:"easier",      he:"קל יותר",            p:"תואר",             e:"📉",  hint:"easier than yesterday = קל יותר מאתמול"},
+  {en:"entry",       he:"כניסה",              p:"שם עצם",           e:"🚪",  hint:"entry = כניסה לבניין / לאירוע"},
+  {en:"even",        he:"אפילו",              p:"תואר הפועל",      e:"😲",  hint:"even a baby knows it = אפילו תינוק יודע"},
+  {en:"everywhere",  he:"בכל מקום",           p:"תואר הפועל",      e:"🌍",  hint:"phones are everywhere = טלפונים בכל מקום"},
+  {en:"expensive",   he:"יקר",                p:"תואר",             e:"💎",  hint:"יהלום = expensive = יקר מאוד"},
+  {en:"explorer",    he:"חוקר",               p:"שם עצם",           e:"🧭",  hint:"explorer = חוקר, מגלה מקומות חדשים"},
+  {en:"factory",     he:"מפעל",               p:"שם עצם",           e:"🏭",  hint:"מכוניות מיוצרות ב-factory = מפעל"},
+  {en:"fill",        he:"למלא",               p:"פועל",             e:"🪣",  hint:"fill the cup = למלא את הכוס"},
+  {en:"finally",     he:"לבסוף",              p:"תואר הפועל",      e:"🏁",  hint:"finally the weekend! = לבסוף סוף שבוע!"},
+  {en:"finish",      he:"לסיים",              p:"פועל",             e:"🏁",  hint:"finish your food! = סיים את האוכל שלך!"},
+  {en:"flat",        he:"שטוח",               p:"תואר",             e:"⬜",  hint:"flat screen TV = מסך שטוח"},
+  {en:"free",        he:"חופשי / חינם",       p:"תואר",             e:"🆓",  hint:"free time = זמן חופשי / free entry = כניסה חינם"},
+  {en:"furniture",   he:"רהיטים",             p:"שם עצם",           e:"🪑",  hint:"כיסאות ושולחנות = furniture = רהיטים"},
+  {en:"get to",      he:"להגיע ל-",           p:"פועל",             e:"📍",  hint:"get to school on time = להגיע לבית הספר בזמן"},
+  {en:"go on a trip",he:"לצאת לטיול",         p:"ביטוי",            e:"🎒",  hint:"go on a trip this summer = לצאת לטיול הקיץ"},
+  {en:"gold",        he:"זהב",                p:"שם עצם",           e:"🥇",  hint:"gold medal = מדליית זהב — הכי טוב!"},
+  {en:"guide",       he:"מדריך",              p:"שם עצם",           e:"🗺️",  hint:"tour guide = מדריך טיולים, מראה את הדרך"},
+  {en:"had fun",     he:"נהנה",               p:"ביטוי",            e:"😄",  hint:"I had fun at the party! = נהניתי במסיבה!"},
+  {en:"hate",        he:"לשנוא",              p:"פועל",             e:"😤",  hint:"I hate getting up early = אני שונא לקום מוקדם"},
+  {en:"heavy",       he:"כבד",                p:"תואר",             e:"🏋️",  hint:"the backpack is so heavy! = התיק כל כך כבד!"},
+  {en:"hike",        he:"טיול רגלי",          p:"שם עצם",           e:"🥾",  hint:"hike in the forest = טיול רגלי ביער עם נעלי טיול"},
+  {en:"hill",        he:"גבעה",               p:"שם עצם",           e:"⛰️",  hint:"small hill = גבעה (לא הר, אבל עדיין לטפס)"},
+  {en:"invent",      he:"להמציא",             p:"פועל",             e:"💡",  hint:"Edison invented the bulb = אדיסון המציא את הנורה"},
+  {en:"job",         he:"עבודה / תפקיד",      p:"שם עצם",           e:"👷",  hint:"what's your job? = מה העבודה שלך?"},
+  {en:"joke",        he:"בדיחה",              p:"שם עצם",           e:"😂",  hint:"tell me a joke! = ספר לי בדיחה!"},
+  {en:"leave",       he:"לעזוב",              p:"פועל",             e:"🚶",  hint:"leave the room = לעזוב את החדר"},
+  {en:"left",        he:"עזב",                p:"פועל עבר",         e:"👋",  hint:"left school early = עזב מוקדם (עבר של leave)"},
+  {en:"letter",      he:"מכתב",               p:"שם עצם",           e:"✉️",  hint:"write a letter = לכתוב מכתב (לא וואטסאפ!)"},
+  {en:"library",     he:"ספרייה",             p:"שם עצם",           e:"📚",  hint:"borrow books from the library = לשאול ספרים מהספרייה"},
+  {en:"lie",         he:"לשקר / לשכב",        p:"פועל",             e:"🤥",  hint:"don't lie! = אל תשקר! / lie down = לשכב"},
+  {en:"look after",  he:"לטפל ב-",            p:"פועל",             e:"🌱",  hint:"look after the dog = לטפל בכלב, להשגיח"},
+  {en:"look like",   he:"להיראות כמו",         p:"פועל",             e:"👀",  hint:"you look like your dad = אתה נראה כמו אבא שלך"},
+  {en:"make a call", he:"לבצע שיחה",          p:"ביטוי",            e:"📞",  hint:"make a call to mom = לבצע שיחה לאמא"},
+  {en:"marry",       he:"להתחתן",             p:"פועל",             e:"💍",  hint:"they want to marry = הם רוצים להתחתן"},
+  {en:"mean",        he:"להתכוון / משמעות",   p:"פועל",             e:"🤔",  hint:"what does it mean? = מה המשמעות? / I didn't mean it = לא התכוונתי"},
+  {en:"medal",       he:"מדליה",              p:"שם עצם",           e:"🥇",  hint:"win a gold medal = לזכות במדליית זהב"},
+  {en:"meeting",     he:"פגישה",              p:"שם עצם",           e:"🤝",  hint:"a meeting with the teacher = פגישה עם המורה"},
+  {en:"miss",        he:"להתגעגע / לפספס",    p:"פועל",             e:"💔",  hint:"miss grandma = מתגעגע לסבתא / miss the bus = פספס אוטובוס"},
+  {en:"newspaper",   he:"עיתון",              p:"שם עצם",           e:"📰",  hint:"סבא קורא newspaper = עיתון כל בוקר"},
+  {en:"only",        he:"רק",                 p:"תואר הפועל",      e:"☝️",  hint:"only one left = נשאר רק אחד"},
+  {en:"open",        he:"פתוח",               p:"תואר",             e:"🔓",  hint:"the shop is open = החנות פתוחה"},
+  {en:"own",         he:"שלו / בבעלותו",      p:"תואר",             e:"🏠",  hint:"his own room = החדר שלו עצמו"},
+  {en:"person",      he:"אדם",                p:"שם עצם",           e:"👤",  hint:"one person = אדם אחד (רבים: people)"},
+  {en:"pocket",      he:"כיס",                p:"שם עצם",           e:"👖",  hint:"phone in your pocket = טלפון בכיס המכנסיים"},
+  {en:"price",       he:"מחיר",               p:"שם עצם",           e:"🏷️",  hint:"the price is 50 shekel = המחיר 50 שקל"},
+  {en:"prize",       he:"פרס",                p:"שם עצם",           e:"🏆",  hint:"first prize = פרס ראשון (prize = פרס, price = מחיר!)"},
+  {en:"ran",         he:"רץ",                 p:"פועל עבר",         e:"🏃",  hint:"ran very fast = רץ מהר מאוד (עבר של run)"},
+  {en:"record",      he:"שיא / להקליט",       p:"שם עצם / פועל",   e:"📹",  hint:"world record = שיא עולמי / record a video = להקליט"},
+  {en:"reporter",    he:"כתב / רפורטר",       p:"שם עצם",           e:"🎤",  hint:"TV reporter = כתב טלוויזיה, מדווח על חדשות"},
+  {en:"return",      he:"לחזור",              p:"פועל",             e:"🔄",  hint:"return home after school = לחזור הביתה"},
+  {en:"round",       he:"עגול",               p:"תואר",             e:"⭕",  hint:"a ball is round = כדור הוא עגול"},
+  {en:"run away",    he:"לברוח",              p:"פועל",             e:"🏃‍♂️",  hint:"run away from danger = לברוח מסכנה"},
+  {en:"side",        he:"צד",                 p:"שם עצם",           e:"↔️",  hint:"right side = הצד הימני / left side = הצד השמאלי"},
+  {en:"sign",        he:"שלט / סימן",         p:"שם עצם",           e:"🚦",  hint:"stop sign = שלט עצור / sign of rain = סימן לגשם"},
+  {en:"simple",      he:"פשוט",               p:"תואר",             e:"✌️",  hint:"simple question = שאלה פשוטה, לא קשה"},
+  {en:"smart",       he:"חכם",                p:"תואר",             e:"🧠",  hint:"smart student = תלמיד חכם"},
+  {en:"smile",       he:"חיוך",               p:"שם עצם",           e:"😊",  hint:"beautiful smile = חיוך יפה"},
+  {en:"song",        he:"שיר",                p:"שם עצם",           e:"🎵",  hint:"my favorite song = השיר האהוב עליי"},
+  {en:"start",       he:"להתחיל / התחלה",     p:"פועל / שם עצם",   e:"🚦",  hint:"start the game = להתחיל את המשחק"},
+  {en:"steal",       he:"לגנוב",              p:"פועל",             e:"🦹",  hint:"don't steal! = אל תגנוב! (steal → thief = גנב)"},
+  {en:"still",       he:"עדיין",              p:"תואר הפועל",      e:"⏰",  hint:"still waiting... = עדיין מחכה..."},
+  {en:"street",      he:"רחוב",               p:"שם עצם",           e:"🛣️",  hint:"cross the street carefully = חצה את הרחוב בזהירות"},
+  {en:"student",     he:"תלמיד / סטודנט",     p:"שם עצם",           e:"🎓",  hint:"good student = תלמיד טוב (גם באוניברסיטה)"},
+  {en:"suddenly",    he:"פתאום",              p:"תואר הפועל",      e:"⚡",  hint:"suddenly it rained! = פתאום ירד גשם!"},
+  {en:"swimmer",     he:"שחיין",              p:"שם עצם",           e:"🏊",  hint:"fast swimmer = שחיין מהיר (swim = לשחות)"},
+  {en:"terrible",    he:"נורא",               p:"תואר",             e:"😱",  hint:"terrible smell = ריח נורא / terrible grade = ציון נורא"},
+  {en:"then",        he:"אז / לאחר מכן",      p:"תואר הפועל",      e:"➡️",  hint:"eat first, then play = קודם לאכול, אז לשחק"},
+  {en:"thief",       he:"גנב",                p:"שם עצם",           e:"🦹",  hint:"thief = גנב (steal = לגנוב — אותה משפחה!)"},
+  {en:"thousand",    he:"אלף",                p:"מספר",             e:"💯",  hint:"one thousand = 1,000 — אלף"},
+  {en:"told",        he:"סיפר / אמר",         p:"פועל עבר",         e:"💬",  hint:"told a story = סיפר סיפור (עבר של tell)"},
+  {en:"view",        he:"נוף / מבט",          p:"שם עצם",           e:"🌄",  hint:"beautiful view from the window = נוף יפה מהחלון"},
+  {en:"visit",       he:"לבקר",               p:"פועל",             e:"🏠",  hint:"visit grandma on Friday = לבקר את סבתא ביום שישי"},
+  {en:"was born",    he:"נולד",               p:"ביטוי",            e:"👶",  hint:"I was born in 2013 = נולדתי ב-2013"},
+  {en:"well",        he:"היטב",               p:"תואר הפועל",      e:"👍",  hint:"she sings very well = היא שרה היטב מאוד"},
+  {en:"went",        he:"הלך",                p:"פועל עבר",         e:"👟",  hint:"went to school = הלך לבית הספר (עבר של go)"},
+  {en:"win",         he:"לנצח",               p:"פועל",             e:"🏆",  hint:"I want to win! = אני רוצה לנצח!"},
+  {en:"winner",      he:"מנצח",               p:"שם עצם",           e:"🥇",  hint:"the winner gets the prize = המנצח מקבל את הפרס"},
+  {en:"wrote",       he:"כתב",                p:"פועל עבר",         e:"✍️",  hint:"wrote a story = כתב סיפור (עבר של write)"},
 ];
 
 /* ══ STATE ══ */
-let hits = {};   // en -> 0 | 1 | 2
-let totalOk = 0, totalBad = 0;
+let hits = {}, totalOk = 0, totalBad = 0;
 
 function load() {
   try {
-    hits     = JSON.parse(localStorage.getItem('wu3_h') || '{}');
-    totalOk  = +localStorage.getItem('wu3_ok')  || 0;
-    totalBad = +localStorage.getItem('wu3_bad') || 0;
+    hits     = JSON.parse(localStorage.getItem('wu4_h') || '{}');
+    totalOk  = +localStorage.getItem('wu4_ok')  || 0;
+    totalBad = +localStorage.getItem('wu4_bad') || 0;
   } catch(e) { hits = {}; }
 }
 function save() {
-  localStorage.setItem('wu3_h',   JSON.stringify(hits));
-  localStorage.setItem('wu3_ok',  totalOk);
-  localStorage.setItem('wu3_bad', totalBad);
+  localStorage.setItem('wu4_h',   JSON.stringify(hits));
+  localStorage.setItem('wu4_ok',  totalOk);
+  localStorage.setItem('wu4_bad', totalBad);
 }
 function resetAll() { hits = {}; totalOk = 0; totalBad = 0; save(); }
 function confirmReset() {
@@ -355,171 +404,152 @@ function updateHome() {
   document.getElementById('legAlm').textContent  = almost + ' כמעט';
   document.getElementById('legNew').textContent  = fresh + ' חדשות';
   document.getElementById('btnStart').textContent = done > 0 ? '🎮 המשך ללמוד!' : '🎮 התחל ללמוד!';
-  const C = 2 * Math.PI * 68; // circumference for r=68
+  const C = 2 * Math.PI * 65;
   document.getElementById('ringFill').style.strokeDashoffset = C * (1 - done / W.length);
 }
 
 /* ══ AUDIO ══ */
 let actx;
-function beep(f, d, t='sine', v=0.25) {
+function beep(f,d,t='sine',v=0.25) {
   try {
-    if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
-    const o = actx.createOscillator(), g = actx.createGain();
+    if (!actx) actx = new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(), g=actx.createGain();
     o.connect(g); g.connect(actx.destination);
-    o.type = t; o.frequency.value = f;
-    g.gain.setValueAtTime(v, actx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + d);
-    o.start(); o.stop(actx.currentTime + d);
+    o.type=t; o.frequency.value=f;
+    g.gain.setValueAtTime(v,actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+d);
+    o.start(); o.stop(actx.currentTime+d);
   } catch(e) {}
 }
-const sndOk   = () => { beep(523,.08); setTimeout(()=>beep(659,.08),65); setTimeout(()=>beep(784,.2),130); };
-const sndBad  = () => beep(160,.35,'sawtooth',.14);
-const sndMast = () => [523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18),i*75));
-const sndWin  = () => [523,587,659,784,880,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18),i*90));
+const sndOk  = ()=>{beep(523,.08);setTimeout(()=>beep(659,.08),65);setTimeout(()=>beep(784,.2),130);};
+const sndBad = ()=>beep(160,.35,'sawtooth',.14);
+const sndMast= ()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18),i*75));
+const sndWin = ()=>[523,587,659,784,880,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18),i*90));
 
 /* ══ GAME ══ */
 function shuffle(a) {
-  a = [...a];
-  for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  a=[...a];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
   return a;
 }
 
-let pool = [], cur = null, locked = false;
+let pool=[], cur=null, locked=false;
 
 function buildPool() {
-  const active = activePool();
-  if (!active.length) return [];
-  const bag = [];
-  active.forEach(w => {
-    const n = (hits[w.en]||0) === 0 ? 3 : 2;
-    for (let i=0; i<n; i++) bag.push(w);
-  });
+  const active=activePool();
+  if(!active.length) return [];
+  const bag=[];
+  active.forEach(w=>{const n=(hits[w.en]||0)===0?3:2;for(let i=0;i<n;i++)bag.push(w);});
   return shuffle(bag);
 }
 
 function startGame() {
-  if (!activePool().length) resetAll();
-  pool = buildPool();
-  go('game');
-  nextWord();
+  if(!activePool().length) resetAll();
+  pool=buildPool(); go('game'); nextWord();
 }
 
 function nextWord() {
-  locked = false;
-  if (!pool.length) pool = buildPool();
-  if (!pool.length) { showWin(); return; }
-  cur = pool.shift();
+  locked=false;
+  if(!pool.length) pool=buildPool();
+  if(!pool.length){showWin();return;}
+  cur=pool.shift();
   renderWord();
 }
 
 function renderWord() {
-  const w = cur;
-  const el = document.getElementById('wcWord');
-  el.textContent = w.en;
-  const len = w.en.length;
-  el.style.fontSize = len > 14 ? '26px' : len > 9 ? '34px' : '44px';
+  const w=cur;
+  const el=document.getElementById('wcWord');
+  el.textContent=w.en;
+  const len=w.en.length;
+  el.style.fontSize=len>14?'24px':len>9?'32px':'42px';
 
-  document.getElementById('wcPart').textContent = w.p;
+  document.getElementById('wcEmoji').textContent = w.e;
+  document.getElementById('wcPart').textContent  = w.p;
+  document.getElementById('hintBox').textContent = w.hint;
 
-  const h = hits[w.en] || 0;
-  document.getElementById('d0').className = 'hdot' + (h >= 1 ? ' on' : '');
-  document.getElementById('d1').className = 'hdot' + (h >= 2 ? ' on' : '');
+  const h=hits[w.en]||0;
+  document.getElementById('d0').className='hdot'+(h>=1?' on':'');
+  document.getElementById('d1').className='hdot'+(h>=2?' on':'');
 
-  const mast   = mastCount();
-  const remain = activePool().length;
+  const mast=mastCount(), remain=activePool().length;
   document.getElementById('gMastN').textContent  = mast;
-  document.getElementById('gRemain').textContent = 'נשאר ' + remain;
-  document.getElementById('gbar').style.width    = (mast / W.length * 100) + '%';
+  document.getElementById('gRemain').textContent = 'נשאר '+remain;
+  document.getElementById('gbar').style.width    = (mast/W.length*100)+'%';
 
-  // options: correct + 3 random wrong
-  const others = shuffle(W.filter(x => x.en !== w.en)).slice(0,3);
-  const opts   = shuffle([w, ...others]);
-  const grid   = document.getElementById('optsGrid');
-  grid.innerHTML = '';
-  opts.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'opt';
-    btn.textContent = opt.he;
-    btn.onclick = () => answer(btn, opt);
+  const others=shuffle(W.filter(x=>x.en!==w.en)).slice(0,3);
+  const opts=shuffle([w,...others]);
+  const grid=document.getElementById('optsGrid');
+  grid.innerHTML='';
+  opts.forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.className='opt';
+    btn.textContent=opt.he;
+    btn.onclick=()=>answer(btn,opt);
     grid.appendChild(btn);
   });
 }
 
 function answer(btn, chosen) {
-  if (locked) return;
-  locked = true;
+  if(locked) return;
+  locked=true;
 
-  if (chosen.en === cur.en) {
-    // CORRECT
+  if(chosen.en===cur.en) {
     btn.classList.add('ok');
-    sndOk();
-    totalOk++;
-    hits[cur.en] = (hits[cur.en] || 0) + 1;
+    sndOk(); totalOk++;
+    hits[cur.en]=(hits[cur.en]||0)+1;
     save();
-    if (hits[cur.en] >= 2) {
-      setTimeout(() => flashMastered(cur.en), 180);
-    } else {
-      setTimeout(nextWord, 620);
-    }
+    if(hits[cur.en]>=2) setTimeout(()=>flashMastered(cur.en),180);
+    else setTimeout(nextWord,620);
   } else {
-    // WRONG — reveal correct, put word back soon
     btn.classList.add('bad');
-    document.querySelectorAll('.opt').forEach(b => {
-      if (b.textContent === cur.he) b.classList.add('rev');
-    });
-    sndBad();
-    totalBad++;
+    document.querySelectorAll('.opt').forEach(b=>{if(b.textContent===cur.he)b.classList.add('rev');});
+    sndBad(); totalBad++;
     save();
-    pool.splice(Math.min(3, pool.length), 0, cur); // retry after 3
-    setTimeout(nextWord, 1300);
+    pool.splice(Math.min(3,pool.length),0,cur);
+    setTimeout(nextWord,1300);
   }
-
-  // live dot update
-  const h = hits[cur.en] || 0;
-  document.getElementById('d0').className = 'hdot' + (h >= 1 ? ' on' : '');
+  const h=hits[cur.en]||0;
+  document.getElementById('d0').className='hdot'+(h>=1?' on':'');
 }
 
 function flashMastered(en) {
   sndMast();
-  document.getElementById('mbadgeTxt').textContent = '✅ "' + en + '" — נלמד!';
-  const fl = document.getElementById('mflash');
+  document.getElementById('mbadgeTxt').textContent='✅ "'+en+'" — נלמד!';
+  const fl=document.getElementById('mflash');
   fl.classList.add('on');
   confetti(28);
-  setTimeout(() => {
+  setTimeout(()=>{
     fl.classList.remove('on');
-    if (!activePool().length) setTimeout(showWin, 250);
+    if(!activePool().length) setTimeout(showWin,250);
     else nextWord();
-  }, 1400);
+  },1400);
 }
 
 function showWin() {
   sndWin();
-  document.getElementById('wOk').textContent  = totalOk;
-  document.getElementById('wBad').textContent = totalBad;
-  go('win');
-  confetti(100);
+  document.getElementById('wOk').textContent =totalOk;
+  document.getElementById('wBad').textContent=totalBad;
+  go('win'); confetti(100);
 }
 
 function confetti(n) {
-  const cols = ['#c084fc','#818cf8','#38bdf8','#10b981','#f59e0b','#ef4444','#fff'];
-  for (let i=0; i<n; i++) {
-    setTimeout(() => {
-      const el = document.createElement('div');
-      el.className = 'cf';
-      const s = 6 + Math.random()*9;
-      el.style.cssText = `left:${Math.random()*100}vw;top:-14px;width:${s}px;height:${s}px;`
-        + `background:${cols[~~(Math.random()*cols.length)]};`
-        + `border-radius:${Math.random()>.5?'50%':'2px'};`
-        + `animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.5}s;`;
+  const cols=['#c084fc','#818cf8','#38bdf8','#10b981','#f59e0b','#ef4444','#fff'];
+  for(let i=0;i<n;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='cf';
+      const s=6+Math.random()*9;
+      el.style.cssText=`left:${Math.random()*100}vw;top:-14px;width:${s}px;height:${s}px;`
+        +`background:${cols[~~(Math.random()*cols.length)]};`
+        +`border-radius:${Math.random()>.5?'50%':'2px'};`
+        +`animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.5}s;`;
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 4000);
-    }, i*22);
+      setTimeout(()=>el.remove(),4000);
+    },i*22);
   }
 }
 
-/* ══ INIT ══ */
-load();
-updateHome();
+load(); updateHome();
 </script>
 </body>
 </html>
