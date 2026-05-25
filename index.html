@@ -7,18 +7,16 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-/* ── fixed gradient background div ── */
-#bg {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
+html {
+  min-height: 100%;
   background: linear-gradient(160deg, #120a2e 0%, #1e1050 45%, #0d1a3a 100%);
-  z-index: -1;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: #fff;
   min-height: 100vh;
+  background: transparent;
 }
 
 /* screens */
@@ -177,9 +175,6 @@ body {
 </style>
 </head>
 <body>
-
-<!-- guaranteed background -->
-<div id="bg"></div>
 
 <svg width="0" height="0" style="position:absolute;overflow:hidden">
   <defs>
