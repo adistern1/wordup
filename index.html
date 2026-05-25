@@ -7,63 +7,80 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-html { height:100%; }
-
-body {
-  min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: #fff;
-  background: #120a2e;
-  background-image: linear-gradient(160deg, #120a2e 0%, #1e1050 45%, #0d1a3a 100%);
-  background-attachment: fixed;
+/* ── fixed gradient background div ── */
+#bg {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(160deg, #120a2e 0%, #1e1050 45%, #0d1a3a 100%);
+  z-index: -1;
 }
 
-.screen { display: none; flex-direction: column; align-items: center; min-height: 100vh; padding: 24px 18px; }
-.screen.on { display: flex; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* screens */
+.screen { display: none; }
+.screen.on {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0 18px 28px;
+}
 
 /* ── HOME ── */
-#s-home { justify-content: space-between; padding-top: 40px; }
+#s-home { padding-top: 36px; gap: 0; }
 
+.title-block { text-align: center; margin-bottom: 28px; }
 .title {
-  font-size: 54px; font-weight: 900; letter-spacing: -2px; text-align: center;
+  font-size: 52px; font-weight: 900; letter-spacing: -2px;
   background: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-.subtitle { font-size: 15px; color: rgba(255,255,255,0.45); text-align: center; margin-top: 4px; }
+.subtitle { font-size: 15px; color: rgba(255,255,255,0.45); margin-top: 3px; }
 
-/* progress section */
-.prog-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.prog-section {
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  flex: 1; justify-content: center; width: 100%;
+}
 
-.ring-outer { position: relative; width: 160px; height: 160px; }
-.ring-outer svg { transform: rotate(-90deg); display: block; }
-.ring-bg   { fill:none; stroke: rgba(255,255,255,0.08); stroke-width:12; }
-.ring-fill { fill:none; stroke: url(#rg); stroke-width:12; stroke-linecap:round; transition: stroke-dashoffset 1s ease; }
-.ring-inner {
-  position: absolute; inset: 0;
+.ring-wrap { position: relative; width: 160px; height: 160px; }
+.ring-wrap svg { display: block; transform: rotate(-90deg); }
+.ring-bg   { fill: none; stroke: rgba(255,255,255,0.09); stroke-width: 12; }
+.ring-fill { fill: none; stroke: url(#rg); stroke-width: 12; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+.ring-center {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 .ring-n   { font-size: 38px; font-weight: 900; color: #c084fc; line-height: 1; }
-.ring-lbl { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+.ring-lbl { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 3px; }
 
-.legend { display: flex; gap: 18px; }
-.leg { display: flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; }
-.dot { width: 11px; height: 11px; border-radius: 50%; }
+.legend { display: flex; gap: 16px; }
+.leg { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); }
+.ldot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
-.home-btns { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; padding-bottom: 28px; }
+.home-btns {
+  display: flex; flex-direction: column; gap: 12px;
+  width: 100%; max-width: 300px; margin-top: 32px;
+}
 
 .btn-play {
   padding: 19px; border: none; border-radius: 18px;
   background: linear-gradient(135deg, #7c3aed, #4338ca);
   color: #fff; font-size: 20px; font-weight: 800; cursor: pointer;
-  box-shadow: 0 8px 30px rgba(124,58,237,0.5);
+  box-shadow: 0 8px 28px rgba(124,58,237,0.5);
   transition: transform .12s, box-shadow .12s;
 }
-.btn-play:active { transform: scale(0.97); box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+.btn-play:active { transform: scale(0.97); }
 
-.btn-reset {
+.btn-sec {
   padding: 13px; border: none; border-radius: 14px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.13);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
   color: rgba(255,255,255,0.6); font-size: 15px; font-weight: 600; cursor: pointer;
 }
 
@@ -72,43 +89,32 @@ body {
 
 .g-top {
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; margin-bottom: 14px;
+  width: 100%; margin-bottom: 12px;
 }
-.g-learned {
-  font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.7);
-}
-.g-learned span { color: #c084fc; font-size: 18px; font-weight: 900; }
-.g-remain { font-size: 13px; color: rgba(255,255,255,0.4); }
+.g-learned { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.65); }
+.g-learned strong { color: #c084fc; font-size: 17px; }
+.g-remain  { font-size: 13px; color: rgba(255,255,255,0.38); }
 
-/* thin progress bar */
-.gbar-wrap { width:100%; height:6px; background: rgba(255,255,255,0.08); border-radius:3px; margin-bottom:22px; overflow:hidden; }
-.gbar { height:100%; background: linear-gradient(90deg,#10b981,#c084fc); border-radius:3px; transition: width .5s ease; }
+.gbar-wrap { width:100%; height:6px; background:rgba(255,255,255,0.08); border-radius:3px; margin-bottom:22px; overflow:hidden; }
+.gbar { height:100%; background: linear-gradient(90deg,#10b981,#c084fc); border-radius:3px; transition:width .6s ease; min-width:3px; }
 
-/* word card */
 .wcard {
   width: 100%;
-  background: rgba(255,255,255,0.055);
+  background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 28px; padding: 30px 22px;
-  text-align: center; margin-bottom: 22px;
-  backdrop-filter: blur(6px);
+  border-radius: 26px; padding: 28px 20px;
+  text-align: center; margin-bottom: 20px;
 }
-.wcard-part { font-size: 11px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
-.wcard-word { font-size: 44px; font-weight: 900; direction: ltr; line-height: 1.1; }
-.wcard-word.long { font-size: 28px; }
-.wcard-word.med  { font-size: 34px; }
-
-/* hit dots */
-.hit-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+.wc-part { font-size: 11px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+.wc-word { font-weight: 900; line-height: 1.1; direction: ltr; }
+.hit-dots { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
 .hdot {
-  width: 10px; height: 10px; border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.3);
-  transition: all .3s;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.25); transition: all .3s;
 }
-.hdot.filled { background: #c084fc; border-color: #c084fc; }
+.hdot.on { background: #c084fc; border-color: #c084fc; box-shadow: 0 0 8px #c084fc88; }
 
-/* options */
-.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; width: 100%; }
 .opt {
   padding: 20px 10px; min-height: 68px;
   border: 2px solid rgba(255,255,255,0.12);
@@ -118,51 +124,45 @@ body {
   cursor: pointer; transition: all .12s; line-height: 1.3;
 }
 .opt:active { transform: scale(0.96); }
-.opt.ok  { background:rgba(16,185,129,.25); border-color:#10b981; animation: pop .35s; }
-.opt.bad { background:rgba(239,68,68,.25);  border-color:#ef4444; animation: shk .4s; }
-.opt.rev { background:rgba(16,185,129,.15); border-color:rgba(16,185,129,.5); }
+.opt.ok  { background: rgba(16,185,129,.22); border-color: #10b981; animation: opop .35s; }
+.opt.bad { background: rgba(239,68,68,.22);  border-color: #ef4444; animation: oshk .4s; }
+.opt.rev { background: rgba(16,185,129,.14); border-color: rgba(16,185,129,.5); }
 
-@keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.07)} 100%{transform:scale(1)} }
-@keyframes shk { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-7px)} 75%{transform:translateX(7px)} }
+@keyframes opop { 0%{transform:scale(1)} 50%{transform:scale(1.07)} 100%{transform:scale(1)} }
+@keyframes oshk { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-7px)} 75%{transform:translateX(7px)} }
 
-/* "mastered" flash overlay */
-.mastered-flash {
-  position: fixed; inset: 0; z-index: 50;
+/* mastered flash */
+.mflash {
+  position: fixed; top:0; left:0; right:0; bottom:0; z-index: 50;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 12px; pointer-events: none;
-  opacity: 0; transition: opacity .2s;
-  background: rgba(16,185,129,0.12);
-  backdrop-filter: blur(2px);
+  background: rgba(16,185,129,0.1);
+  pointer-events: none; opacity: 0; transition: opacity .2s;
 }
-.mastered-flash.show { opacity: 1; }
-.mastered-badge {
+.mflash.on { opacity: 1; }
+.mbadge {
   background: linear-gradient(135deg,#10b981,#059669);
-  border-radius: 24px; padding: 20px 40px;
-  font-size: 28px; font-weight: 900;
-  box-shadow: 0 12px 40px rgba(16,185,129,.5);
-  animation: popBig .3s ease;
+  border-radius: 22px; padding: 18px 36px;
+  font-size: 26px; font-weight: 900;
+  box-shadow: 0 12px 40px rgba(16,185,129,.45);
+  animation: bigpop .3s ease;
 }
-@keyframes popBig { 0%{transform:scale(.5);opacity:0} 70%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
+@keyframes bigpop { 0%{transform:scale(.4);opacity:0} 70%{transform:scale(1.08)} 100%{transform:scale(1)} }
 
-/* ── CELEBRATION ── */
+/* ── WIN ── */
 #s-win { justify-content: center; gap: 22px; padding-top: 40px; }
-
-.win-trophy { font-size: 88px; animation: bounce 1.5s infinite; }
+.wtrophy { font-size: 86px; animation: bounce 1.5s infinite; }
 @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
-
-.win-title { font-size: 36px; font-weight: 900; text-align: center; }
-.win-sub   { font-size: 16px; color: rgba(255,255,255,0.6); text-align: center; }
-
-.win-stats { display: flex; gap: 24px; }
-.wstat { text-align: center; }
+.wtitle { font-size: 34px; font-weight: 900; text-align: center; }
+.wsub   { font-size: 15px; color: rgba(255,255,255,0.55); text-align: center; }
+.wstats { display: flex; gap: 24px; }
+.wstat  { text-align: center; }
 .wstat .n { font-size: 32px; font-weight: 900; }
 .wstat .l { font-size: 12px; color: rgba(255,255,255,0.45); }
-
 .btn-again {
-  padding: 18px 40px; border: none; border-radius: 18px;
+  padding: 17px 38px; border: none; border-radius: 18px;
   background: linear-gradient(135deg,#7c3aed,#4338ca);
-  color: #fff; font-size: 19px; font-weight: 800; cursor: pointer;
-  box-shadow: 0 8px 30px rgba(124,58,237,.5); margin-top: 8px;
+  color: #fff; font-size: 18px; font-weight: 800; cursor: pointer;
+  box-shadow: 0 8px 28px rgba(124,58,237,.45);
 }
 
 /* confetti */
@@ -172,19 +172,16 @@ body {
 }
 @keyframes cfFall { to { transform:translateY(110vh) rotate(720deg); opacity:0; } }
 
-/* pts popup */
-.ptspop {
-  position: fixed; pointer-events: none; z-index: 99;
-  font-size: 24px; font-weight: 900; opacity: 0;
-}
-
 ::-webkit-scrollbar { width:3px; }
 ::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.15); border-radius:2px; }
 </style>
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute">
+<!-- guaranteed background -->
+<div id="bg"></div>
+
+<svg width="0" height="0" style="position:absolute;overflow:hidden">
   <defs>
     <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#10b981"/>
@@ -193,211 +190,159 @@ body {
   </defs>
 </svg>
 
-<!-- HOME -->
+<!-- ══ HOME ══ -->
 <div id="s-home" class="screen on">
-  <div>
+  <div class="title-block">
     <div class="title">WordUp! 🚀</div>
     <div class="subtitle">לומד מילות אנגלית — כיתה ה'</div>
   </div>
 
-  <div class="prog-wrap">
-    <div class="ring-outer">
+  <div class="prog-section">
+    <div class="ring-wrap">
       <svg width="160" height="160" viewBox="0 0 160 160">
         <circle class="ring-bg"   cx="80" cy="80" r="68"/>
         <circle class="ring-fill" id="ringFill" cx="80" cy="80" r="68"
           stroke-dasharray="427.26" stroke-dashoffset="427.26"/>
       </svg>
-      <div class="ring-inner">
-        <div class="ring-n" id="mastN">0</div>
+      <div class="ring-center">
+        <div class="ring-n"   id="mastN">0</div>
         <div class="ring-lbl">מתוך 103</div>
       </div>
     </div>
 
     <div class="legend">
-      <div class="leg"><div class="dot" style="background:#ef4444"></div><span id="legNew">103 חדשות</span></div>
-      <div class="leg"><div class="dot" style="background:#f59e0b"></div><span id="legAlmost">0 כמעט</span></div>
-      <div class="leg"><div class="dot" style="background:#10b981"></div><span id="legDone">0 נלמדו</span></div>
+      <div class="leg"><div class="ldot" style="background:#ef4444"></div><span id="legNew">103 חדשות</span></div>
+      <div class="leg"><div class="ldot" style="background:#f59e0b"></div><span id="legAlm">0 כמעט</span></div>
+      <div class="leg"><div class="ldot" style="background:#10b981"></div><span id="legDone">0 נלמדו</span></div>
     </div>
   </div>
 
   <div class="home-btns">
     <button class="btn-play" id="btnStart" onclick="startGame()">🎮 התחל ללמוד!</button>
-    <button class="btn-reset" onclick="resetProgress()">🗑 אפס התקדמות</button>
+    <button class="btn-sec"  onclick="confirmReset()">🗑 אפס התקדמות</button>
   </div>
 </div>
 
-<!-- GAME -->
+<!-- ══ GAME ══ -->
 <div id="s-game" class="screen">
   <div class="g-top">
-    <div class="g-learned">נלמדו <span id="gMastN">0</span>/103 🎓</div>
+    <div class="g-learned">נלמדו <strong id="gMastN">0</strong>/103 🎓</div>
     <div class="g-remain" id="gRemain">נשאר 103</div>
   </div>
   <div class="gbar-wrap"><div class="gbar" id="gbar" style="width:0%"></div></div>
 
-  <div class="wcard" id="wcard">
-    <div class="wcard-part" id="wcPart"></div>
-    <div class="wcard-word" id="wcWord"></div>
-    <div class="hit-dots" id="hitDots">
-      <div class="hdot" id="dot0"></div>
-      <div class="hdot" id="dot1"></div>
+  <div class="wcard">
+    <div class="wc-part" id="wcPart"></div>
+    <div class="wc-word" id="wcWord"></div>
+    <div class="hit-dots">
+      <div class="hdot" id="d0"></div>
+      <div class="hdot" id="d1"></div>
     </div>
   </div>
 
   <div class="opts" id="optsGrid"></div>
 </div>
 
-<!-- MASTERED FLASH -->
-<div class="mastered-flash" id="mastFlash">
-  <div class="mastered-badge" id="mastBadgeText">✅ נלמד!</div>
+<!-- mastered flash -->
+<div class="mflash" id="mflash">
+  <div class="mbadge" id="mbadgeTxt">✅ נלמד!</div>
 </div>
 
-<!-- WIN SCREEN -->
+<!-- ══ WIN ══ -->
 <div id="s-win" class="screen">
-  <div class="win-trophy">🏆</div>
-  <div class="win-title">כל המילים נלמדו! 🎉</div>
-  <div class="win-sub" id="winSub">סיימת את כל 103 המילים!</div>
-  <div class="win-stats">
-    <div class="wstat"><div class="n" id="wTot" style="color:#c084fc">0</div><div class="l">מילים</div></div>
+  <div class="wtrophy">🏆</div>
+  <div class="wtitle">כל המילים נלמדו! 🎉</div>
+  <div class="wsub">סיימת את כל 103 המילות!</div>
+  <div class="wstats">
+    <div class="wstat"><div class="n" id="wTot" style="color:#c084fc">103</div><div class="l">מילים</div></div>
     <div class="wstat"><div class="n" id="wOk"  style="color:#10b981">0</div><div class="l">נכון</div></div>
     <div class="wstat"><div class="n" id="wBad" style="color:#ef4444">0</div><div class="l">טעויות</div></div>
   </div>
-  <button class="btn-again" onclick="resetProgress(); startGame()">🔄 שחק שוב</button>
-  <button class="btn-reset" style="margin-top:4px" onclick="go('home')">🏠 בית</button>
+  <button class="btn-again" onclick="resetAll(); startGame()">🔄 שחק שוב</button>
+  <button class="btn-sec" style="margin-top:6px;max-width:200px;width:100%" onclick="go('home')">🏠 בית</button>
 </div>
 
 <script>
-/* ══ DATA ══ */
+/* ══ WORDS ══ */
 const W = [
-  {en:"above",        he:"מעל",               p:"מילת יחס"},
-  {en:"address",      he:"כתובת",             p:"שם עצם"},
-  {en:"after",        he:"אחרי",              p:"מילת יחס"},
-  {en:"already",      he:"כבר",               p:"תואר הפועל"},
-  {en:"alone",        he:"לבד",               p:"תואר"},
-  {en:"another",      he:"אחר",               p:"תואר"},
-  {en:"arrive",       he:"להגיע",             p:"פועל"},
-  {en:"ask for",      he:"לבקש",              p:"פועל"},
-  {en:"at last",      he:"סוף סוף",           p:"ביטוי"},
-  {en:"ate",          he:"אכל",               p:"פועל עבר"},
-  {en:"before",       he:"לפני",              p:"מילת יחס"},
-  {en:"began",        he:"התחיל",             p:"פועל עבר"},
-  {en:"bought",       he:"קנה",               p:"פועל עבר"},
-  {en:"bowl",         he:"קערה",              p:"שם עצם"},
-  {en:"came",         he:"בא",                p:"פועל עבר"},
-  {en:"carefully",    he:"בזהירות",           p:"תואר הפועל"},
-  {en:"cheap",        he:"זול",               p:"תואר"},
-  {en:"comfortable",  he:"נוח",               p:"תואר"},
-  {en:"competition",  he:"תחרות",             p:"שם עצם"},
-  {en:"cost",         he:"עולה / עלות",       p:"פועל / שם עצם"},
-  {en:"could",        he:"יכול היה",          p:"פועל עזר"},
-  {en:"date",         he:"תאריך",             p:"שם עצם"},
-  {en:"did",          he:"עשה",               p:"פועל עבר"},
-  {en:"die",          he:"למות",              p:"פועל"},
-  {en:"drawing",      he:"ציור",              p:"שם עצם"},
-  {en:"drew",         he:"צייר",              p:"פועל עבר"},
-  {en:"drove",        he:"נהג",               p:"פועל עבר"},
-  {en:"during",       he:"במהלך",             p:"מילת יחס"},
-  {en:"easier",       he:"קל יותר",           p:"תואר"},
-  {en:"entry",        he:"כניסה",             p:"שם עצם"},
-  {en:"even",         he:"אפילו",             p:"תואר הפועל"},
-  {en:"everywhere",   he:"בכל מקום",          p:"תואר הפועל"},
-  {en:"expensive",    he:"יקר",               p:"תואר"},
-  {en:"explorer",     he:"חוקר",              p:"שם עצם"},
-  {en:"factory",      he:"מפעל",              p:"שם עצם"},
-  {en:"fill",         he:"למלא",              p:"פועל"},
-  {en:"finally",      he:"לבסוף",             p:"תואר הפועל"},
-  {en:"finish",       he:"לסיים",             p:"פועל"},
-  {en:"flat",         he:"שטוח",              p:"תואר"},
-  {en:"free",         he:"חופשי / חינם",      p:"תואר"},
-  {en:"furniture",    he:"רהיטים",            p:"שם עצם"},
-  {en:"get to",       he:"להגיע ל-",          p:"פועל"},
-  {en:"go on a trip", he:"לצאת לטיול",        p:"ביטוי"},
-  {en:"gold",         he:"זהב",               p:"שם עצם"},
-  {en:"guide",        he:"מדריך",             p:"שם עצם"},
-  {en:"had fun",      he:"נהנה",              p:"ביטוי"},
-  {en:"hate",         he:"לשנוא",             p:"פועל"},
-  {en:"heavy",        he:"כבד",               p:"תואר"},
-  {en:"hike",         he:"טיול רגלי",         p:"שם עצם"},
-  {en:"hill",         he:"גבעה",              p:"שם עצם"},
-  {en:"invent",       he:"להמציא",            p:"פועל"},
-  {en:"job",          he:"עבודה / תפקיד",     p:"שם עצם"},
-  {en:"joke",         he:"בדיחה",             p:"שם עצם"},
-  {en:"leave",        he:"לעזוב",             p:"פועל"},
-  {en:"left",         he:"עזב",               p:"פועל עבר"},
-  {en:"letter",       he:"מכתב",              p:"שם עצם"},
-  {en:"library",      he:"ספרייה",            p:"שם עצם"},
-  {en:"lie",          he:"לשקר / לשכב",       p:"פועל"},
-  {en:"look after",   he:"לטפל ב-",           p:"פועל"},
-  {en:"look like",    he:"להיראות כמו",        p:"פועל"},
-  {en:"make a call",  he:"לבצע שיחה",         p:"ביטוי"},
-  {en:"marry",        he:"להתחתן",            p:"פועל"},
-  {en:"mean",         he:"להתכוון / משמעות",  p:"פועל"},
-  {en:"medal",        he:"מדליה",             p:"שם עצם"},
-  {en:"meeting",      he:"פגישה",             p:"שם עצם"},
-  {en:"miss",         he:"להתגעגע / לפספס",   p:"פועל"},
-  {en:"newspaper",    he:"עיתון",             p:"שם עצם"},
-  {en:"only",         he:"רק",                p:"תואר הפועל"},
-  {en:"open",         he:"פתוח",              p:"תואר"},
-  {en:"own",          he:"שלו / בבעלותו",     p:"תואר"},
-  {en:"person",       he:"אדם",               p:"שם עצם"},
-  {en:"pocket",       he:"כיס",               p:"שם עצם"},
-  {en:"price",        he:"מחיר",              p:"שם עצם"},
-  {en:"prize",        he:"פרס",               p:"שם עצם"},
-  {en:"ran",          he:"רץ",                p:"פועל עבר"},
-  {en:"record",       he:"שיא / להקליט",      p:"שם עצם / פועל"},
-  {en:"reporter",     he:"כתב / רפורטר",      p:"שם עצם"},
-  {en:"return",       he:"לחזור",             p:"פועל"},
-  {en:"round",        he:"עגול",              p:"תואר"},
-  {en:"run away",     he:"לברוח",             p:"פועל"},
-  {en:"side",         he:"צד",                p:"שם עצם"},
-  {en:"sign",         he:"שלט / סימן",        p:"שם עצם"},
-  {en:"simple",       he:"פשוט",              p:"תואר"},
-  {en:"smart",        he:"חכם",               p:"תואר"},
-  {en:"smile",        he:"חיוך",              p:"שם עצם"},
-  {en:"song",         he:"שיר",               p:"שם עצם"},
-  {en:"start",        he:"להתחיל / התחלה",    p:"פועל / שם עצם"},
-  {en:"steal",        he:"לגנוב",             p:"פועל"},
-  {en:"still",        he:"עדיין",             p:"תואר הפועל"},
-  {en:"street",       he:"רחוב",              p:"שם עצם"},
-  {en:"student",      he:"סטודנט",            p:"שם עצם"},
-  {en:"suddenly",     he:"פתאום",             p:"תואר הפועל"},
-  {en:"swimmer",      he:"שחיין",             p:"שם עצם"},
-  {en:"terrible",     he:"נורא",              p:"תואר"},
-  {en:"then",         he:"אז",                p:"תואר הפועל"},
-  {en:"thief",        he:"גנב",               p:"שם עצם"},
-  {en:"thousand",     he:"אלף",               p:"מספר"},
-  {en:"told",         he:"סיפר / אמר",        p:"פועל עבר"},
-  {en:"view",         he:"נוף / מבט",         p:"שם עצם"},
-  {en:"visit",        he:"לבקר",              p:"פועל"},
-  {en:"was born",     he:"נולד",              p:"ביטוי"},
-  {en:"well",         he:"היטב",              p:"תואר הפועל"},
-  {en:"went",         he:"הלך",               p:"פועל עבר"},
-  {en:"win",          he:"לנצח",              p:"פועל"},
-  {en:"winner",       he:"מנצח",              p:"שם עצם"},
-  {en:"wrote",        he:"כתב",               p:"פועל עבר"},
+  {en:"above",he:"מעל",p:"מילת יחס"},{en:"address",he:"כתובת",p:"שם עצם"},
+  {en:"after",he:"אחרי",p:"מילת יחס"},{en:"already",he:"כבר",p:"תואר הפועל"},
+  {en:"alone",he:"לבד",p:"תואר"},{en:"another",he:"אחר",p:"תואר"},
+  {en:"arrive",he:"להגיע",p:"פועל"},{en:"ask for",he:"לבקש",p:"פועל"},
+  {en:"at last",he:"סוף סוף",p:"ביטוי"},{en:"ate",he:"אכל",p:"פועל עבר"},
+  {en:"before",he:"לפני",p:"מילת יחס"},{en:"began",he:"התחיל",p:"פועל עבר"},
+  {en:"bought",he:"קנה",p:"פועל עבר"},{en:"bowl",he:"קערה",p:"שם עצם"},
+  {en:"came",he:"בא",p:"פועל עבר"},{en:"carefully",he:"בזהירות",p:"תואר הפועל"},
+  {en:"cheap",he:"זול",p:"תואר"},{en:"comfortable",he:"נוח",p:"תואר"},
+  {en:"competition",he:"תחרות",p:"שם עצם"},{en:"cost",he:"עולה / עלות",p:"פועל / שם עצם"},
+  {en:"could",he:"יכול היה",p:"פועל עזר"},{en:"date",he:"תאריך",p:"שם עצם"},
+  {en:"did",he:"עשה",p:"פועל עבר"},{en:"die",he:"למות",p:"פועל"},
+  {en:"drawing",he:"ציור",p:"שם עצם"},{en:"drew",he:"צייר",p:"פועל עבר"},
+  {en:"drove",he:"נהג",p:"פועל עבר"},{en:"during",he:"במהלך",p:"מילת יחס"},
+  {en:"easier",he:"קל יותר",p:"תואר"},{en:"entry",he:"כניסה",p:"שם עצם"},
+  {en:"even",he:"אפילו",p:"תואר הפועל"},{en:"everywhere",he:"בכל מקום",p:"תואר הפועל"},
+  {en:"expensive",he:"יקר",p:"תואר"},{en:"explorer",he:"חוקר",p:"שם עצם"},
+  {en:"factory",he:"מפעל",p:"שם עצם"},{en:"fill",he:"למלא",p:"פועל"},
+  {en:"finally",he:"לבסוף",p:"תואר הפועל"},{en:"finish",he:"לסיים",p:"פועל"},
+  {en:"flat",he:"שטוח",p:"תואר"},{en:"free",he:"חופשי / חינם",p:"תואר"},
+  {en:"furniture",he:"רהיטים",p:"שם עצם"},{en:"get to",he:"להגיע ל-",p:"פועל"},
+  {en:"go on a trip",he:"לצאת לטיול",p:"ביטוי"},{en:"gold",he:"זהב",p:"שם עצם"},
+  {en:"guide",he:"מדריך",p:"שם עצם"},{en:"had fun",he:"נהנה",p:"ביטוי"},
+  {en:"hate",he:"לשנוא",p:"פועל"},{en:"heavy",he:"כבד",p:"תואר"},
+  {en:"hike",he:"טיול רגלי",p:"שם עצם"},{en:"hill",he:"גבעה",p:"שם עצם"},
+  {en:"invent",he:"להמציא",p:"פועל"},{en:"job",he:"עבודה / תפקיד",p:"שם עצם"},
+  {en:"joke",he:"בדיחה",p:"שם עצם"},{en:"leave",he:"לעזוב",p:"פועל"},
+  {en:"left",he:"עזב",p:"פועל עבר"},{en:"letter",he:"מכתב",p:"שם עצם"},
+  {en:"library",he:"ספרייה",p:"שם עצם"},{en:"lie",he:"לשקר / לשכב",p:"פועל"},
+  {en:"look after",he:"לטפל ב-",p:"פועל"},{en:"look like",he:"להיראות כמו",p:"פועל"},
+  {en:"make a call",he:"לבצע שיחה",p:"ביטוי"},{en:"marry",he:"להתחתן",p:"פועל"},
+  {en:"mean",he:"להתכוון / משמעות",p:"פועל"},{en:"medal",he:"מדליה",p:"שם עצם"},
+  {en:"meeting",he:"פגישה",p:"שם עצם"},{en:"miss",he:"להתגעגע / לפספס",p:"פועל"},
+  {en:"newspaper",he:"עיתון",p:"שם עצם"},{en:"only",he:"רק",p:"תואר הפועל"},
+  {en:"open",he:"פתוח",p:"תואר"},{en:"own",he:"שלו / בבעלותו",p:"תואר"},
+  {en:"person",he:"אדם",p:"שם עצם"},{en:"pocket",he:"כיס",p:"שם עצם"},
+  {en:"price",he:"מחיר",p:"שם עצם"},{en:"prize",he:"פרס",p:"שם עצם"},
+  {en:"ran",he:"רץ",p:"פועל עבר"},{en:"record",he:"שיא / להקליט",p:"שם עצם / פועל"},
+  {en:"reporter",he:"כתב / רפורטר",p:"שם עצם"},{en:"return",he:"לחזור",p:"פועל"},
+  {en:"round",he:"עגול",p:"תואר"},{en:"run away",he:"לברוח",p:"פועל"},
+  {en:"side",he:"צד",p:"שם עצם"},{en:"sign",he:"שלט / סימן",p:"שם עצם"},
+  {en:"simple",he:"פשוט",p:"תואר"},{en:"smart",he:"חכם",p:"תואר"},
+  {en:"smile",he:"חיוך",p:"שם עצם"},{en:"song",he:"שיר",p:"שם עצם"},
+  {en:"start",he:"להתחיל / התחלה",p:"פועל / שם עצם"},{en:"steal",he:"לגנוב",p:"פועל"},
+  {en:"still",he:"עדיין",p:"תואר הפועל"},{en:"street",he:"רחוב",p:"שם עצם"},
+  {en:"student",he:"סטודנט",p:"שם עצם"},{en:"suddenly",he:"פתאום",p:"תואר הפועל"},
+  {en:"swimmer",he:"שחיין",p:"שם עצם"},{en:"terrible",he:"נורא",p:"תואר"},
+  {en:"then",he:"אז",p:"תואר הפועל"},{en:"thief",he:"גנב",p:"שם עצם"},
+  {en:"thousand",he:"אלף",p:"מספר"},{en:"told",he:"סיפר / אמר",p:"פועל עבר"},
+  {en:"view",he:"נוף / מבט",p:"שם עצם"},{en:"visit",he:"לבקר",p:"פועל"},
+  {en:"was born",he:"נולד",p:"ביטוי"},{en:"well",he:"היטב",p:"תואר הפועל"},
+  {en:"went",he:"הלך",p:"פועל עבר"},{en:"win",he:"לנצח",p:"פועל"},
+  {en:"winner",he:"מנצח",p:"שם עצם"},{en:"wrote",he:"כתב",p:"פועל עבר"},
 ];
 
-/* ══ PROGRESS ══
-   hits[en] = 0 (new) | 1 (seen once) | 2 (mastered — removed)
-*/
-let hits = {};   // en -> 0/1/2
+/* ══ STATE ══ */
+let hits = {};   // en -> 0 | 1 | 2
 let totalOk = 0, totalBad = 0;
 
 function load() {
-  try { hits = JSON.parse(localStorage.getItem('wu2_hits') || '{}'); } catch(e) {}
-  totalOk  = +localStorage.getItem('wu2_ok')  || 0;
-  totalBad = +localStorage.getItem('wu2_bad') || 0;
+  try {
+    hits     = JSON.parse(localStorage.getItem('wu3_h') || '{}');
+    totalOk  = +localStorage.getItem('wu3_ok')  || 0;
+    totalBad = +localStorage.getItem('wu3_bad') || 0;
+  } catch(e) { hits = {}; }
 }
 function save() {
-  localStorage.setItem('wu2_hits', JSON.stringify(hits));
-  localStorage.setItem('wu2_ok',   totalOk);
-  localStorage.setItem('wu2_bad',  totalBad);
+  localStorage.setItem('wu3_h',   JSON.stringify(hits));
+  localStorage.setItem('wu3_ok',  totalOk);
+  localStorage.setItem('wu3_bad', totalBad);
 }
-function resetProgress() {
-  hits = {}; totalOk = 0; totalBad = 0; save(); updateHome();
+function resetAll() { hits = {}; totalOk = 0; totalBad = 0; save(); }
+function confirmReset() {
+  if (confirm('למחוק את כל ההתקדמות?')) { resetAll(); updateHome(); }
 }
 
-function masteredCount() { return W.filter(w => (hits[w.en]||0) >= 2).length; }
-function activePool()    { return W.filter(w => (hits[w.en]||0) < 2); }
+function mastCount()  { return W.filter(w => (hits[w.en]||0) >= 2).length; }
+function activePool() { return W.filter(w => (hits[w.en]||0) < 2); }
 
 /* ══ HOME ══ */
 function go(name) {
@@ -407,62 +352,58 @@ function go(name) {
 }
 
 function updateHome() {
-  const done   = masteredCount();
+  const done   = mastCount();
   const almost = W.filter(w => (hits[w.en]||0) === 1).length;
   const fresh  = W.length - done - almost;
-  document.getElementById('mastN').textContent    = done;
-  document.getElementById('legDone').textContent   = done + ' נלמדו';
-  document.getElementById('legAlmost').textContent = almost + ' כמעט';
-  document.getElementById('legNew').textContent    = fresh + ' חדשות';
-  document.getElementById('btnStart').textContent  = done > 0 ? '🎮 המשך ללמוד!' : '🎮 התחל ללמוד!';
-  const C = 2 * Math.PI * 68;
+  document.getElementById('mastN').textContent   = done;
+  document.getElementById('legDone').textContent = done + ' נלמדו';
+  document.getElementById('legAlm').textContent  = almost + ' כמעט';
+  document.getElementById('legNew').textContent  = fresh + ' חדשות';
+  document.getElementById('btnStart').textContent = done > 0 ? '🎮 המשך ללמוד!' : '🎮 התחל ללמוד!';
+  const C = 2 * Math.PI * 68; // circumference for r=68
   document.getElementById('ringFill').style.strokeDashoffset = C * (1 - done / W.length);
 }
 
 /* ══ AUDIO ══ */
-let actx = null;
-function beep(f, d, type='sine', v=0.25) {
+let actx;
+function beep(f, d, t='sine', v=0.25) {
   try {
-    if (!actx) actx = new (window.AudioContext||window.webkitAudioContext)();
+    if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
     const o = actx.createOscillator(), g = actx.createGain();
     o.connect(g); g.connect(actx.destination);
-    o.type = type; o.frequency.value = f;
+    o.type = t; o.frequency.value = f;
     g.gain.setValueAtTime(v, actx.currentTime);
     g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + d);
     o.start(); o.stop(actx.currentTime + d);
   } catch(e) {}
 }
-function sndOk()  { beep(523,.07); setTimeout(()=>beep(659,.07),65); setTimeout(()=>beep(784,.18),130); }
-function sndBad() { beep(180,.3,'sawtooth',.15); }
-function sndMast(){ [523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18),i*80)); }
-function sndWin() { [523,587,659,784,880,1047,1175].forEach((f,i)=>setTimeout(()=>beep(f,.18),i*90)); }
+const sndOk   = () => { beep(523,.08); setTimeout(()=>beep(659,.08),65); setTimeout(()=>beep(784,.2),130); };
+const sndBad  = () => beep(160,.35,'sawtooth',.14);
+const sndMast = () => [523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18),i*75));
+const sndWin  = () => [523,587,659,784,880,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18),i*90));
 
-/* ══ SHUFFLE ══ */
-function shuffle(arr) {
-  const a = [...arr];
+/* ══ GAME ══ */
+function shuffle(a) {
+  a = [...a];
   for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
   return a;
 }
 
-/* ══ GAME STATE ══ */
-let pool = [];        // current round queue
-let current = null;   // current word
-let locked = false;
+let pool = [], cur = null, locked = false;
 
 function buildPool() {
-  /* Weight: hits=0 → 3 copies, hits=1 → 2 copies */
   const active = activePool();
-  if (active.length === 0) return [];
+  if (!active.length) return [];
   const bag = [];
   active.forEach(w => {
     const n = (hits[w.en]||0) === 0 ? 3 : 2;
-    for (let i=0;i<n;i++) bag.push(w);
+    for (let i=0; i<n; i++) bag.push(w);
   });
   return shuffle(bag);
 }
 
 function startGame() {
-  if (activePool().length === 0) { resetProgress(); }
+  if (!activePool().length) resetAll();
   pool = buildPool();
   go('game');
   nextWord();
@@ -470,31 +411,32 @@ function startGame() {
 
 function nextWord() {
   locked = false;
-  if (pool.length === 0) pool = buildPool();
-  if (pool.length === 0) { showWin(); return; }
-  current = pool.shift();
+  if (!pool.length) pool = buildPool();
+  if (!pool.length) { showWin(); return; }
+  cur = pool.shift();
   renderWord();
 }
 
 function renderWord() {
-  const w = current;
-  const wEl = document.getElementById('wcWord');
-  wEl.textContent = w.en;
-  wEl.className = 'wcard-word' + (w.en.length > 14 ? ' long' : w.en.length > 9 ? ' med' : '');
+  const w = cur;
+  const el = document.getElementById('wcWord');
+  el.textContent = w.en;
+  const len = w.en.length;
+  el.style.fontSize = len > 14 ? '26px' : len > 9 ? '34px' : '44px';
 
   document.getElementById('wcPart').textContent = w.p;
 
-  const h = hits[w.en]||0;
-  document.getElementById('dot0').className = 'hdot' + (h >= 1 ? ' filled' : '');
-  document.getElementById('dot1').className = 'hdot' + (h >= 2 ? ' filled' : '');
+  const h = hits[w.en] || 0;
+  document.getElementById('d0').className = 'hdot' + (h >= 1 ? ' on' : '');
+  document.getElementById('d1').className = 'hdot' + (h >= 2 ? ' on' : '');
 
-  const mastered = masteredCount();
-  const remain   = activePool().length;
-  document.getElementById('gMastN').textContent = mastered;
-  document.getElementById('gRemain').textContent = `נשאר ${remain}`;
-  document.getElementById('gbar').style.width = (mastered / W.length * 100) + '%';
+  const mast   = mastCount();
+  const remain = activePool().length;
+  document.getElementById('gMastN').textContent  = mast;
+  document.getElementById('gRemain').textContent = 'נשאר ' + remain;
+  document.getElementById('gbar').style.width    = (mast / W.length * 100) + '%';
 
-  /* options */
+  // options: correct + 3 random wrong
   const others = shuffle(W.filter(x => x.en !== w.en)).slice(0,3);
   const opts   = shuffle([w, ...others]);
   const grid   = document.getElementById('optsGrid');
@@ -512,85 +454,71 @@ function answer(btn, chosen) {
   if (locked) return;
   locked = true;
 
-  const correct = chosen.en === current.en;
-  if (correct) {
+  if (chosen.en === cur.en) {
+    // CORRECT
     btn.classList.add('ok');
     sndOk();
     totalOk++;
-    const prev = hits[current.en]||0;
-    hits[current.en] = prev + 1;
+    hits[cur.en] = (hits[cur.en] || 0) + 1;
     save();
-
-    if (hits[current.en] >= 2) {
-      /* word mastered! */
-      setTimeout(() => showMastered(current.en), 200);
+    if (hits[cur.en] >= 2) {
+      setTimeout(() => flashMastered(cur.en), 180);
     } else {
-      setTimeout(nextWord, 600);
+      setTimeout(nextWord, 620);
     }
   } else {
+    // WRONG — reveal correct, put word back soon
     btn.classList.add('bad');
-    /* reveal correct */
     document.querySelectorAll('.opt').forEach(b => {
-      if (b.textContent === current.he) b.classList.add('rev');
+      if (b.textContent === cur.he) b.classList.add('rev');
     });
     sndBad();
     totalBad++;
     save();
-    /* put word back into pool soon (after 3 others) */
-    pool.splice(Math.min(3, pool.length), 0, current);
-    setTimeout(nextWord, 1200);
+    pool.splice(Math.min(3, pool.length), 0, cur); // retry after 3
+    setTimeout(nextWord, 1300);
   }
 
-  /* update dots live */
-  const h = hits[current.en]||0;
-  document.getElementById('dot0').className = 'hdot' + (h >= 1 ? ' filled' : '');
+  // live dot update
+  const h = hits[cur.en] || 0;
+  document.getElementById('d0').className = 'hdot' + (h >= 1 ? ' on' : '');
 }
 
-function showMastered(en) {
+function flashMastered(en) {
   sndMast();
-  const flash = document.getElementById('mastFlash');
-  document.getElementById('mastBadgeText').textContent = `✅ "${en}" — נלמד!`;
-  flash.classList.add('show');
-
-  /* confetti burst */
-  confetti(30);
-
+  document.getElementById('mbadgeTxt').textContent = '✅ "' + en + '" — נלמד!';
+  const fl = document.getElementById('mflash');
+  fl.classList.add('on');
+  confetti(28);
   setTimeout(() => {
-    flash.classList.remove('show');
-    if (activePool().length === 0) { setTimeout(showWin, 300); }
+    fl.classList.remove('on');
+    if (!activePool().length) setTimeout(showWin, 250);
     else nextWord();
   }, 1400);
 }
 
-/* ══ WIN ══ */
 function showWin() {
   sndWin();
-  document.getElementById('wTot').textContent = W.length;
   document.getElementById('wOk').textContent  = totalOk;
   document.getElementById('wBad').textContent = totalBad;
   go('win');
   confetti(100);
 }
 
-/* ══ CONFETTI ══ */
 function confetti(n) {
   const cols = ['#c084fc','#818cf8','#38bdf8','#10b981','#f59e0b','#ef4444','#fff'];
-  for (let i=0;i<n;i++) {
+  for (let i=0; i<n; i++) {
     setTimeout(() => {
       const el = document.createElement('div');
       el.className = 'cf';
-      const sz = 6 + Math.random()*9;
-      el.style.cssText = `
-        left:${Math.random()*100}vw; top:-14px;
-        width:${sz}px; height:${sz}px;
-        background:${cols[Math.floor(Math.random()*cols.length)]};
-        border-radius:${Math.random()>.5?'50%':'2px'};
-        animation-duration:${1.6+Math.random()*2}s;
-        animation-delay:${Math.random()*.5}s;
-      `;
+      const s = 6 + Math.random()*9;
+      el.style.cssText = `left:${Math.random()*100}vw;top:-14px;width:${s}px;height:${s}px;`
+        + `background:${cols[~~(Math.random()*cols.length)]};`
+        + `border-radius:${Math.random()>.5?'50%':'2px'};`
+        + `animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.5}s;`;
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 4000);
-    }, i * 20);
+    }, i*22);
   }
 }
 
