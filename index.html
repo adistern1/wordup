@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WordUp! 🚀</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(160deg, #120a2e 0%, #1e1050 40%, #0d1a3a 100%);
+  min-height: 100vh;
+  color: #fff;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 18px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.screen.active { opacity: 1; pointer-events: all; }
+
+/* ── HOME ── */
+#s-home { justify-content: space-between; padding-top: 36px; }
+
+.app-logo { text-align: center; }
+.app-title {
+  font-size: 52px; font-weight: 900; letter-spacing: -2px;
+  background: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.app-sub { font-size: 15px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+.ring-wrap { position: relative; width: 148px; height: 148px; }
+.ring-wrap svg { transform: rotate(-90deg); }
+.ring-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 11; }
+.ring-fill {
+  fill: none; stroke: url(#rg); stroke-width: 11; stroke-linecap: round;
+  transition: stroke-dashoffset 1.2s ease;
+}
+.ring-text {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.ring-num { font-size: 34px; font-weight: 900; color: #c084fc; }
+.ring-lbl { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: -2px; }
+
+.stats-row { display: flex; gap: 16px; }
+.chip {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 22px; padding: 8px 16px;
+  font-size: 15px; font-weight: 700;
+}
+.chip span:first-child { font-size: 20px; }
+
+.mode-row {
+  display: flex; gap: 6px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 5px;
+  width: 100%; max-width: 300px;
+}
+.mode-btn {
+  flex: 1; padding: 10px 6px;
+  border: none; border-radius: 10px;
+  background: transparent; color: rgba(255,255,255,0.45);
+  font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+}
+.mode-btn.on { background: rgba(192,132,252,0.25); color: #fff; }
+
+.home-btns { display: flex; flex-direction: column; gap: 11px; width: 100%; max-width: 300px; padding-bottom: 24px; }
+
+.btn-main {
+  padding: 18px; border: none; border-radius: 18px;
+  background: linear-gradient(135deg, #7c3aed, #4338ca);
+  color: #fff; font-size: 20px; font-weight: 800; cursor: pointer;
+  box-shadow: 0 8px 28px rgba(124,58,237,0.45);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.btn-main:active { transform: scale(0.97); box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+
+.btn-sec {
+  padding: 14px; border: none; border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.75); font-size: 16px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-sec:active { background: rgba(255,255,255,0.14); }
+
+/* ── GAME ── */
+#s-game { justify-content: flex-start; padding-top: 14px; }
+
+.g-header {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; margin-bottom: 10px;
+}
+.lives { font-size: 24px; letter-spacing: 2px; min-width: 80px; }
+.combo {
+  padding: 4px 13px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  border-radius: 20px; font-size: 14px; font-weight: 900;
+  opacity: 0; transition: opacity 0.2s; white-space: nowrap;
+}
+.combo.on { opacity: 1; }
+.g-score { font-size: 24px; font-weight: 900; color: #c084fc; min-width: 80px; text-align: left; direction: ltr; }
+
+.tbar-wrap { width: 100%; height: 7px; background: rgba(255,255,255,0.09); border-radius: 4px; overflow: hidden; }
+.tbar { height: 100%; width: 100%; background: linear-gradient(90deg,#10b981,#818cf8); border-radius: 4px; transition: width linear; }
+.tbar.warn { background: linear-gradient(90deg,#f59e0b,#ef4444); }
+
+.q-label { font-size: 12px; color: rgba(255,255,255,0.35); margin: 6px 0 18px; align-self: flex-start; }
+
+.word-card {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 26px; padding: 28px 20px;
+  text-align: center; backdrop-filter: blur(8px);
+  margin-bottom: 22px;
+}
+.wc-part { font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+.wc-word { font-size: 42px; font-weight: 900; line-height: 1.1; }
+.wc-word.ltr { direction: ltr; }
+
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+.opt {
+  padding: 19px 10px; min-height: 66px;
+  border: 2px solid rgba(255,255,255,0.13);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.05);
+  color: #fff; font-size: 16px; font-weight: 700;
+  cursor: pointer; transition: all 0.12s; line-height: 1.3;
+}
+.opt:active { transform: scale(0.96); }
+.opt.ok  { background: rgba(16,185,129,0.2); border-color: #10b981; animation: pop .35s ease; }
+.opt.bad { background: rgba(239,68,68,0.2);  border-color: #ef4444; animation: shake .4s ease; }
+.opt.reveal { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.5); }
+
+@keyframes pop   { 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-7px)} 75%{transform:translateX(7px)} }
+
+.pts-pop {
+  position: fixed; pointer-events: none; z-index: 99;
+  font-size: 26px; font-weight: 900; color: #c084fc;
+  opacity: 0; transition: none;
+}
+
+/* ── FLASHCARDS ── */
+#s-flash { justify-content: space-between; padding-top: 14px; }
+
+.flash-top { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 12px; }
+.back-btn { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 14px; cursor: pointer; }
+.flash-ctr { font-size: 14px; color: rgba(255,255,255,0.45); }
+
+.card-scene { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; perspective: 900px; }
+.fc {
+  width: 100%; max-width: 320px; height: 210px;
+  position: relative; cursor: pointer;
+  transform-style: preserve-3d; transition: transform 0.45s ease;
+}
+.fc.flip { transform: rotateY(180deg); }
+.fc-face {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  border-radius: 26px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 6px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.fc-front { background: rgba(124,58,237,0.18); }
+.fc-back  { background: rgba(16,185,129,0.18); transform: rotateY(180deg); }
+.fc-hint  { font-size: 12px; color: rgba(255,255,255,0.35); }
+.fc-word  { font-size: 38px; font-weight: 900; }
+.fc-sub   { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+.flash-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 18px; }
+.flash-q { font-size: 13px; color: rgba(255,255,255,0.4); }
+.flash-btns { display: flex; gap: 14px; align-items: center; }
+.fb {
+  width: 56px; height: 56px; border: none; border-radius: 50%;
+  font-size: 24px; cursor: pointer; transition: transform 0.12s;
+}
+.fb:active { transform: scale(0.9); }
+.fb-no  { background: rgba(239,68,68,0.18); border: 1px solid rgba(239,68,68,0.35); }
+.fb-mid { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); font-size: 20px; }
+.fb-yes { background: rgba(16,185,129,0.18); border: 1px solid rgba(16,185,129,0.35); }
+
+/* ── RESULTS ── */
+#s-results { justify-content: center; gap: 20px; padding-top: 32px; }
+
+.stars { display: flex; gap: 6px; font-size: 54px; animation: starPop 0.5s ease; }
+@keyframes starPop { 0%{transform:scale(0.2);opacity:0} 70%{transform:scale(1.2)} 100%{transform:scale(1);opacity:1} }
+
+.res-score { font-size: 56px; font-weight: 900; color: #c084fc; line-height: 1; }
+.res-lbl   { font-size: 15px; color: rgba(255,255,255,0.5); }
+
+.res-stats { display: flex; gap: 22px; }
+.res-stat  { text-align: center; }
+.res-stat .n { font-size: 30px; font-weight: 800; }
+.res-stat .l { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+.res-list {
+  width: 100%; max-width: 320px; max-height: 170px;
+  overflow-y: auto; background: rgba(255,255,255,0.05);
+  border-radius: 18px; padding: 12px;
+}
+.res-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 5px 2px; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 14px;
+}
+.res-item:last-child { border-bottom: none; }
+.res-item .en { direction: ltr; font-weight: 700; color: #818cf8; }
+.res-item .he { color: rgba(255,255,255,0.8); }
+
+.res-btns { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 280px; }
+
+/* ── CONFETTI ── */
+.cf {
+  position: fixed; border-radius: 2px; pointer-events: none; z-index: 200;
+  animation: cfFall linear forwards;
+}
+@keyframes cfFall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ══ HOME ══ -->
+<div id="s-home" class="screen active">
+  <div class="app-logo">
+    <div class="app-title">WordUp! 🚀</div>
+    <div class="app-sub">לימוד מילים באנגלית</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+    <div class="ring-wrap">
+      <svg width="148" height="148" viewBox="0 0 148 148">
+        <circle class="ring-bg" cx="74" cy="74" r="63"/>
+        <circle class="ring-fill" id="ringFill" cx="74" cy="74" r="63"
+          stroke-dasharray="395.84" stroke-dashoffset="395.84"/>
+      </svg>
+      <div class="ring-text">
+        <div class="ring-num" id="mastNum">0</div>
+        <div class="ring-lbl">מתוך 103</div>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="chip"><span>⭐</span><span id="hiScoreEl">0</span></div>
+      <div class="chip"><span>🔥</span><span id="streakEl">0</span></div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:100%">
+    <div class="mode-row">
+      <button class="mode-btn on" id="mEnHe" onclick="setMode('en-he')">🇬🇧→🇮🇱 בחר עברית</button>
+      <button class="mode-btn"    id="mHeEn" onclick="setMode('he-en')">🇮🇱→🇬🇧 בחר אנגלית</button>
+    </div>
+  </div>
+
+  <div class="home-btns">
+    <button class="btn-main" onclick="startQuiz()">🎮 שחק!</button>
+    <button class="btn-sec"  onclick="startFlash()">🃏 כרטיסיות</button>
+  </div>
+</div>
+
+<!-- ══ GAME ══ -->
+<div id="s-game" class="screen">
+  <div class="g-header">
+    <div class="lives" id="livesEl">♥♥♥</div>
+    <div class="combo"  id="comboEl">🔥 x2</div>
+    <div class="g-score" id="scoreEl">0</div>
+  </div>
+  <div class="tbar-wrap"><div class="tbar" id="tbar"></div></div>
+  <div class="q-label" id="qLbl">שאלה 1 מתוך 10</div>
+  <div class="word-card">
+    <div class="wc-part" id="wcPart"></div>
+    <div class="wc-word" id="wcWord"></div>
+  </div>
+  <div class="opts" id="optsGrid"></div>
+</div>
+
+<!-- ══ FLASH ══ -->
+<div id="s-flash" class="screen">
+  <div class="flash-top">
+    <button class="back-btn" onclick="go('home')">← חזור</button>
+    <div class="flash-ctr" id="flashCtr">1 / 103</div>
+    <div style="width:56px"></div>
+  </div>
+  <div class="card-scene">
+    <div class="fc" id="fc" onclick="flipFC()">
+      <div class="fc-face fc-front">
+        <div class="fc-hint">לחץ לגלות תרגום</div>
+        <div class="fc-word ltr" id="fcEn"></div>
+        <div class="fc-sub"  id="fcPart"></div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-hint">תרגום לעברית</div>
+        <div class="fc-word" id="fcHe"></div>
+      </div>
+    </div>
+  </div>
+  <div class="flash-actions">
+    <div class="flash-q">האם ידעת את המילה?</div>
+    <div class="flash-btns">
+      <button class="fb fb-no"  onclick="fcAns(false)" title="לא ידעתי">❌</button>
+      <button class="fb fb-mid" onclick="fcSkip()"     title="דלג">⏭</button>
+      <button class="fb fb-yes" onclick="fcAns(true)"  title="ידעתי!">✅</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESULTS ══ -->
+<div id="s-results" class="screen">
+  <div class="stars"     id="starsEl">⭐⭐⭐</div>
+  <div class="res-score" id="resScore">0</div>
+  <div class="res-lbl">נקודות</div>
+  <div class="res-stats">
+    <div class="res-stat"><div class="n" id="resOk"  style="color:#10b981">0</div><div class="l">נכון ✓</div></div>
+    <div class="res-stat"><div class="n" id="resBad" style="color:#ef4444">0</div><div class="l">טעות ✗</div></div>
+    <div class="res-stat"><div class="n" id="resMas" style="color:#c084fc">0</div><div class="l">נלמד 🎓</div></div>
+  </div>
+  <div class="res-list" id="resList"></div>
+  <div class="res-btns">
+    <button class="btn-main" onclick="startQuiz()">🔄 שחק שוב</button>
+    <button class="btn-sec"  onclick="go('home')">🏠 בית</button>
+  </div>
+</div>
+
+<script>
+// ══ WORD LIST ══
+const W = [
+  {en:"above",        he:"מעל",               p:"מילת יחס"},
+  {en:"address",      he:"כתובת",             p:"שם עצם"},
+  {en:"after",        he:"אחרי",              p:"מילת יחס"},
+  {en:"already",      he:"כבר",               p:"תואר הפועל"},
+  {en:"alone",        he:"לבד",               p:"תואר"},
+  {en:"another",      he:"אחר",               p:"תואר"},
+  {en:"arrive",       he:"להגיע",             p:"פועל"},
+  {en:"ask for",      he:"לבקש",              p:"פועל"},
+  {en:"at last",      he:"סוף סוף",           p:"ביטוי"},
+  {en:"ate",          he:"אכל",               p:"פועל עבר"},
+  {en:"before",       he:"לפני",              p:"מילת יחס"},
+  {en:"began",        he:"התחיל",             p:"פועל עבר"},
+  {en:"bought",       he:"קנה",               p:"פועל עבר"},
+  {en:"bowl",         he:"קערה",              p:"שם עצם"},
+  {en:"came",         he:"בא",                p:"פועל עבר"},
+  {en:"carefully",    he:"בזהירות",           p:"תואר הפועל"},
+  {en:"cheap",        he:"זול",               p:"תואר"},
+  {en:"comfortable",  he:"נוח",               p:"תואר"},
+  {en:"competition",  he:"תחרות",             p:"שם עצם"},
+  {en:"cost",         he:"עולה / עלות",       p:"פועל / שם עצם"},
+  {en:"could",        he:"יכול היה",          p:"פועל עזר"},
+  {en:"date",         he:"תאריך",             p:"שם עצם"},
+  {en:"did",          he:"עשה",               p:"פועל עבר"},
+  {en:"die",          he:"למות",              p:"פועל"},
+  {en:"drawing",      he:"ציור",              p:"שם עצם"},
+  {en:"drew",         he:"צייר",              p:"פועל עבר"},
+  {en:"drove",        he:"נהג",               p:"פועל עבר"},
+  {en:"during",       he:"במהלך",             p:"מילת יחס"},
+  {en:"easier",       he:"קל יותר",           p:"תואר"},
+  {en:"entry",        he:"כניסה",             p:"שם עצם"},
+  {en:"even",         he:"אפילו",             p:"תואר הפועל"},
+  {en:"everywhere",   he:"בכל מקום",          p:"תואר הפועל"},
+  {en:"expensive",    he:"יקר",               p:"תואר"},
+  {en:"explorer",     he:"חוקר",              p:"שם עצם"},
+  {en:"factory",      he:"מפעל",              p:"שם עצם"},
+  {en:"fill",         he:"למלא",              p:"פועל"},
+  {en:"finally",      he:"לבסוף",             p:"תואר הפועל"},
+  {en:"finish",       he:"לסיים",             p:"פועל"},
+  {en:"flat",         he:"שטוח",              p:"תואר"},
+  {en:"free",         he:"חופשי / חינם",      p:"תואר"},
+  {en:"furniture",    he:"רהיטים",            p:"שם עצם"},
+  {en:"get to",       he:"להגיע ל-",          p:"פועל"},
+  {en:"go on a trip", he:"לצאת לטיול",        p:"ביטוי"},
+  {en:"gold",         he:"זהב",               p:"שם עצם"},
+  {en:"guide",        he:"מדריך",             p:"שם עצם"},
+  {en:"had fun",      he:"נהנה",              p:"ביטוי"},
+  {en:"hate",         he:"לשנוא",             p:"פועל"},
+  {en:"heavy",        he:"כבד",               p:"תואר"},
+  {en:"hike",         he:"טיול רגלי",         p:"שם עצם"},
+  {en:"hill",         he:"גבעה",              p:"שם עצם"},
+  {en:"invent",       he:"להמציא",            p:"פועל"},
+  {en:"job",          he:"עבודה / תפקיד",     p:"שם עצם"},
+  {en:"joke",         he:"בדיחה",             p:"שם עצם"},
+  {en:"leave",        he:"לעזוב",             p:"פועל"},
+  {en:"left",         he:"עזב",               p:"פועל עבר"},
+  {en:"letter",       he:"מכתב",              p:"שם עצם"},
+  {en:"library",      he:"ספרייה",            p:"שם עצם"},
+  {en:"lie",          he:"לשקר / לשכב",       p:"פועל"},
+  {en:"look after",   he:"לטפל ב-",           p:"פועל"},
+  {en:"look like",    he:"להיראות כמו",        p:"פועל"},
+  {en:"make a call",  he:"לבצע שיחה",         p:"ביטוי"},
+  {en:"marry",        he:"להתחתן",            p:"פועל"},
+  {en:"mean",         he:"להתכוון / משמעות",  p:"פועל"},
+  {en:"medal",        he:"מדליה",             p:"שם עצם"},
+  {en:"meeting",      he:"פגישה",             p:"שם עצם"},
+  {en:"miss",         he:"להתגעגע / לפספס",   p:"פועל"},
+  {en:"newspaper",    he:"עיתון",             p:"שם עצם"},
+  {en:"only",         he:"רק",                p:"תואר הפועל"},
+  {en:"open",         he:"פתוח",              p:"תואר"},
+  {en:"own",          he:"שלו / בבעלותו",     p:"תואר"},
+  {en:"person",       he:"אדם",               p:"שם עצם"},
+  {en:"pocket",       he:"כיס",               p:"שם עצם"},
+  {en:"price",        he:"מחיר",              p:"שם עצם"},
+  {en:"prize",        he:"פרס",               p:"שם עצם"},
+  {en:"ran",          he:"רץ",                p:"פועל עבר"},
+  {en:"record",       he:"שיא / להקליט",      p:"שם עצם / פועל"},
+  {en:"reporter",     he:"כתב / רפורטר",      p:"שם עצם"},
+  {en:"return",       he:"לחזור",             p:"פועל"},
+  {en:"round",        he:"עגול",              p:"תואר"},
+  {en:"run away",     he:"לברוח",             p:"פועל"},
+  {en:"side",         he:"צד",                p:"שם עצם"},
+  {en:"sign",         he:"שלט / סימן",        p:"שם עצם"},
+  {en:"simple",       he:"פשוט",              p:"תואר"},
+  {en:"smart",        he:"חכם",               p:"תואר"},
+  {en:"smile",        he:"חיוך",              p:"שם עצם"},
+  {en:"song",         he:"שיר",               p:"שם עצם"},
+  {en:"start",        he:"להתחיל / התחלה",    p:"פועל / שם עצם"},
+  {en:"steal",        he:"לגנוב",             p:"פועל"},
+  {en:"still",        he:"עדיין",             p:"תואר הפועל"},
+  {en:"street",       he:"רחוב",              p:"שם עצם"},
+  {en:"student",      he:"סטודנט",            p:"שם עצם"},
+  {en:"suddenly",     he:"פתאום",             p:"תואר הפועל"},
+  {en:"swimmer",      he:"שחיין",             p:"שם עצם"},
+  {en:"terrible",     he:"נורא",              p:"תואר"},
+  {en:"then",         he:"אז",                p:"תואר הפועל"},
+  {en:"thief",        he:"גנב",               p:"שם עצם"},
+  {en:"thousand",     he:"אלף",               p:"מספר"},
+  {en:"told",         he:"סיפר / אמר",        p:"פועל עבר"},
+  {en:"view",         he:"נוף / מבט",         p:"שם עצם"},
+  {en:"visit",        he:"לבקר",              p:"פועל"},
+  {en:"was born",     he:"נולד",              p:"ביטוי"},
+  {en:"well",         he:"היטב",              p:"תואר הפועל"},
+  {en:"went",         he:"הלך",               p:"פועל עבר"},
+  {en:"win",          he:"לנצח",              p:"פועל"},
+  {en:"winner",       he:"מנצח",              p:"שם עצם"},
+  {en:"wrote",        he:"כתב",               p:"פועל עבר"},
+];
+
+// ══ STORAGE ══
+let prog = {}, hiScore = 0, streak = 0, lastDate = '';
+function loadData() {
+  try {
+    prog     = JSON.parse(localStorage.getItem('wu_p')  || '{}');
+    hiScore  = +localStorage.getItem('wu_hi')           || 0;
+    streak   = +localStorage.getItem('wu_str')          || 0;
+    lastDate =  localStorage.getItem('wu_date')         || '';
+  } catch(e) {}
+}
+function saveData() {
+  try {
+    localStorage.setItem('wu_p',    JSON.stringify(prog));
+    localStorage.setItem('wu_hi',   hiScore);
+    localStorage.setItem('wu_str',  streak);
+    localStorage.setItem('wu_date', lastDate);
+  } catch(e) {}
+}
+function mastered() { return W.filter(w => (prog[w.en]||0) >= 3).length; }
+
+// ══ AUDIO ══
+let actx = null;
+function beep(freq, dur, type='sine', vol=0.28) {
+  try {
+    if (!actx) actx = new (window.AudioContext||window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.connect(g); g.connect(actx.destination);
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + dur);
+    o.start(); o.stop(actx.currentTime + dur);
+  } catch(e) {}
+}
+function sndOk()  { beep(523,.08); setTimeout(()=>beep(659,.08),70); setTimeout(()=>beep(784,.18),140); }
+function sndBad() { beep(180,.3,'sawtooth',.18); }
+function sndWin() { [523,587,659,784,880,1047].forEach((f,i)=>setTimeout(()=>beep(f,.15),i*90)); }
+
+// ══ SCREEN ══
+function go(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('s-'+name).classList.add('active');
+  if (name === 'home') updateHome();
+}
+
+// ══ HOME ══
+function updateHome() {
+  const m = mastered();
+  document.getElementById('mastNum').textContent   = m;
+  document.getElementById('hiScoreEl').textContent = hiScore.toLocaleString();
+  document.getElementById('streakEl').textContent  = streak;
+  const C = 2 * Math.PI * 63;
+  document.getElementById('ringFill').style.strokeDashoffset = C * (1 - m / W.length);
+}
+
+let mode = 'en-he';
+function setMode(m) {
+  mode = m;
+  document.getElementById('mEnHe').classList.toggle('on', m === 'en-he');
+  document.getElementById('mHeEn').classList.toggle('on', m === 'he-en');
+}
+
+// ══ QUIZ ══
+let gs = {}; // game state
+
+function shuffle(arr) {
+  for (let i = arr.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function pickQuestions(n) {
+  const pool = [];
+  W.forEach(w => {
+    const s = prog[w.en]||0;
+    const weight = Math.max(1, 6-s);
+    for (let i=0; i<weight; i++) pool.push(w);
+  });
+  shuffle(pool);
+  const seen = new Set(), res = [];
+  for (const w of pool) {
+    if (!seen.has(w.en)) { seen.add(w.en); res.push(w); if (res.length===n) break; }
+  }
+  return res;
+}
+
+function makeOpts(correct) {
+  const others = shuffle(W.filter(w=>w.en!==correct.en)).slice(0,3);
+  return shuffle([correct, ...others]);
+}
+
+function startQuiz() {
+  gs = { score:0, combo:1, lives:3, qi:0, ok:0, bad:0,
+         qs: pickQuestions(10), log:[], tid:null, tleft:10, locked:false, done:false };
+  go('game');
+  showQ();
+}
+
+function showQ() {
+  const q = gs.qs[gs.qi];
+  gs.locked = false;
+
+  document.getElementById('qLbl').textContent  = `שאלה ${gs.qi+1} מתוך 10`;
+  document.getElementById('scoreEl').textContent = gs.score.toLocaleString();
+  document.getElementById('livesEl').textContent = '♥'.repeat(gs.lives) + '♡'.repeat(3-gs.lives);
+
+  const cb = document.getElementById('comboEl');
+  if (gs.combo >= 2) { cb.textContent = `🔥 x${gs.combo}`; cb.classList.add('on'); }
+  else cb.classList.remove('on');
+
+  const wordEl = document.getElementById('wcWord');
+  if (mode === 'en-he') {
+    wordEl.textContent = q.en;
+    wordEl.className = 'wc-word ltr';
+    wordEl.style.fontSize = q.en.length > 14 ? '28px' : q.en.length > 9 ? '34px' : '42px';
+  } else {
+    wordEl.textContent = q.he;
+    wordEl.className = 'wc-word';
+    wordEl.style.fontSize = '36px';
+  }
+  document.getElementById('wcPart').textContent = q.p;
+
+  const opts = makeOpts(q);
+  const grid = document.getElementById('optsGrid');
+  grid.innerHTML = '';
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = mode === 'en-he' ? opt.he : opt.en;
+    if (mode === 'he-en') { btn.style.direction = 'ltr'; btn.style.fontSize = '14px'; }
+    btn.onclick = () => answer(btn, opt, q);
+    grid.appendChild(btn);
+  });
+
+  startTick();
+}
+
+function startTick() {
+  if (gs.tid) clearInterval(gs.tid);
+  gs.tleft = 10;
+  const bar = document.getElementById('tbar');
+  bar.style.transition = 'none';
+  bar.style.width = '100%';
+  bar.className = 'tbar';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    bar.style.transition = `width ${gs.tleft}s linear`;
+    bar.style.width = '0%';
+  }));
+  gs.tid = setInterval(() => {
+    gs.tleft--;
+    if (gs.tleft <= 3) document.getElementById('tbar').className = 'tbar warn';
+    if (gs.tleft <= 0) { clearInterval(gs.tid); timeout(); }
+  }, 1000);
+}
+
+function timeout() {
+  if (gs.locked || gs.done) return;
+  gs.locked = true;
+  revealCorrect();
+  sndBad();
+  gs.combo = 1; gs.lives--; gs.bad++;
+  gs.log.push({ w: gs.qs[gs.qi], ok: false });
+  updateHearts();
+  if (gs.lives <= 0) setTimeout(endGame, 800);
+  else setTimeout(nextQ, 1100);
+}
+
+function answer(btn, chosen, q) {
+  if (gs.locked || gs.done) return;
+  gs.locked = true;
+  clearInterval(gs.tid);
+  const correct = chosen.en === q.en;
+  if (correct) {
+    btn.classList.add('ok');
+    sndOk();
+    const bonus = Math.max(0, gs.tleft * 5);
+    const pts   = (100 + bonus) * gs.combo;
+    gs.score += pts; gs.ok++;
+    gs.combo = Math.min(gs.combo+1, 6);
+    prog[q.en] = Math.min((prog[q.en]||0)+1, 5);
+    gs.log.push({ w: q, ok: true });
+    ptsPopup(btn, `+${pts}`);
+    setTimeout(() => gs.qi+1 >= gs.qs.length ? endGame() : nextQ(), 650);
+  } else {
+    btn.classList.add('bad');
+    revealCorrect();
+    sndBad();
+    gs.combo = 1; gs.lives--; gs.bad++;
+    prog[q.en] = Math.max((prog[q.en]||0)-1, 0);
+    gs.log.push({ w: q, ok: false });
+    updateHearts();
+    if (gs.lives <= 0) setTimeout(endGame, 850);
+    else setTimeout(nextQ, 1150);
+  }
+  document.getElementById('scoreEl').textContent = gs.score.toLocaleString();
+}
+
+function revealCorrect() {
+  const q = gs.qs[gs.qi];
+  document.querySelectorAll('.opt').forEach(btn => {
+    const isRight = mode === 'en-he' ? btn.textContent === q.he : btn.textContent === q.en;
+    if (isRight) btn.classList.add('reveal');
+  });
+}
+
+function updateHearts() {
+  document.getElementById('livesEl').textContent = '♥'.repeat(Math.max(0,gs.lives)) + '♡'.repeat(Math.max(0,3-gs.lives));
+}
+
+function nextQ() { gs.qi++; showQ(); }
+
+function ptsPopup(btn, txt) {
+  const el = document.createElement('div');
+  el.className = 'pts-pop';
+  el.textContent = txt;
+  const r = btn.getBoundingClientRect();
+  el.style.left = (r.left + r.width/2 - 28) + 'px';
+  el.style.top  = r.top + 'px';
+  el.style.color = gs.combo >= 3 ? '#f59e0b' : '#c084fc';
+  document.body.appendChild(el);
+  requestAnimationFrame(() => {
+    el.style.transition = 'all 0.75s ease';
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(-44px)';
+  });
+  setTimeout(() => { el.style.opacity='0'; setTimeout(()=>el.remove(), 300); }, 600);
+}
+
+// ══ END GAME ══
+function endGame() {
+  if (gs.done) return;
+  gs.done = true;
+  clearInterval(gs.tid);
+  if (gs.score > hiScore) hiScore = gs.score;
+  const today = new Date().toDateString();
+  if (lastDate !== today) {
+    streak = (lastDate === new Date(Date.now()-86400000).toDateString()) ? streak+1 : 1;
+    lastDate = today;
+  }
+  saveData();
+
+  const total = gs.ok + gs.bad;
+  const pct   = gs.ok / Math.max(1, total);
+  document.getElementById('starsEl').textContent = pct>=0.9?'⭐⭐⭐':pct>=0.6?'⭐⭐':'⭐';
+  document.getElementById('resScore').textContent = gs.score.toLocaleString();
+  document.getElementById('resOk').textContent   = gs.ok;
+  document.getElementById('resBad').textContent  = gs.bad;
+
+  const newMas = gs.log.filter(e => e.ok && (prog[e.w.en]||0) >= 3).length;
+  document.getElementById('resMas').textContent = newMas;
+
+  const list = document.getElementById('resList');
+  list.innerHTML = '';
+  gs.log.forEach(e => {
+    const d = document.createElement('div');
+    d.className = 'res-item';
+    d.innerHTML = `<span class="en">${e.w.en}</span><span class="he">${e.w.he}</span><span>${e.ok?'✅':'❌'}</span>`;
+    list.appendChild(d);
+  });
+
+  if (pct >= 0.8) { sndWin(); confetti(); }
+  go('results');
+}
+
+// ══ CONFETTI ══
+function confetti() {
+  const cols = ['#c084fc','#818cf8','#38bdf8','#10b981','#f59e0b','#ef4444','#fff'];
+  for (let i=0; i<70; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'cf';
+      el.style.cssText = `
+        left:${Math.random()*100}vw; top:-12px;
+        width:${6+Math.random()*9}px; height:${6+Math.random()*9}px;
+        background:${cols[Math.floor(Math.random()*cols.length)]};
+        border-radius:${Math.random()>.5?'50%':'2px'};
+        animation-duration:${1.6+Math.random()*2.2}s;
+        animation-delay:${Math.random()*.6}s;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4200);
+    }, i*25);
+  }
+}
+
+// ══ FLASHCARDS ══
+let fi = 0, forder = [];
+function startFlash() {
+  forder = W.map((_,i)=>i).sort((a,b)=>(prog[W[a].en]||0)-(prog[W[b].en]||0));
+  fi = 0; showFC(); go('flash');
+}
+function showFC() {
+  const w = W[forder[fi]];
+  document.getElementById('fcEn').textContent   = w.en;
+  document.getElementById('fcHe').textContent   = w.he;
+  document.getElementById('fcPart').textContent = w.p;
+  document.getElementById('flashCtr').textContent = `${fi+1} / ${W.length}`;
+  document.getElementById('fc').classList.remove('flip');
+}
+function flipFC() { document.getElementById('fc').classList.toggle('flip'); }
+function fcAns(knew) {
+  const w = W[forder[fi]];
+  if (knew) { prog[w.en] = Math.min((prog[w.en]||0)+1, 5); sndOk(); }
+  else       { prog[w.en] = Math.max((prog[w.en]||0)-1, 0); sndBad(); }
+  saveData(); fcSkip();
+}
+function fcSkip() { fi = (fi+1) % W.length; showFC(); }
+
+// ══ INIT ══
+loadData();
+updateHome();
+</script>
+</body>
+</html>
