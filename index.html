@@ -95,6 +95,16 @@ body {
 .wc-part  { font-size:10px; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
 .wc-word  { font-weight:900; line-height:1.1; direction:ltr; }
 
+.speak-btn {
+  display:inline-flex; align-items:center; justify-content:center;
+  margin-top:8px; padding:6px 14px; gap:6px;
+  background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
+  border-radius:20px; color:rgba(255,255,255,0.75); font-size:14px;
+  cursor:pointer; transition:all .15s;
+}
+.speak-btn:active { transform:scale(0.95); background:rgba(255,255,255,0.18); }
+.speak-btn.speaking { color:#c084fc; border-color:#c084fc; background:rgba(192,132,252,0.15); }
+
 .hint-box {
   margin-top:10px;
   background:rgba(192,132,252,0.1);
@@ -225,6 +235,7 @@ body {
     <div class="wc-emoji" id="wcEmoji">❓</div>
     <div class="wc-part"  id="wcPart"></div>
     <div class="wc-word"  id="wcWord"></div>
+    <button class="speak-btn" id="speakBtn" onclick="speakWord()">🔊 שמע הגייה</button>
     <div class="hint-box" id="hintBox"></div>
     <div class="hit-dots">
       <div class="hdot" id="d0"></div>
@@ -408,6 +419,33 @@ function updateHome() {
   document.getElementById('ringFill').style.strokeDashoffset = C * (1 - done / W.length);
 }
 
+/* ══ SPEECH ══ */
+function speakWord() {
+  if (!window.speechSynthesis || !cur) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(cur.en);
+  utt.lang  = 'en-US';
+  utt.rate  = 0.82;
+  utt.pitch = 1;
+
+  const btn = document.getElementById('speakBtn');
+  btn.classList.add('speaking');
+  utt.onend = () => btn.classList.remove('speaking');
+  utt.onerror = () => btn.classList.remove('speaking');
+
+  // prefer an English voice if available
+  const voices = window.speechSynthesis.getVoices();
+  const enVoice = voices.find(v => v.lang.startsWith('en')) || null;
+  if (enVoice) utt.voice = enVoice;
+
+  window.speechSynthesis.speak(utt);
+}
+
+// auto-speak when word appears (small delay so voices are loaded)
+function autoSpeak() {
+  setTimeout(speakWord, 400);
+}
+
 /* ══ AUDIO ══ */
 let actx;
 function beep(f,d,t='sine',v=0.25) {
@@ -487,6 +525,8 @@ function renderWord() {
     btn.onclick=()=>answer(btn,opt);
     grid.appendChild(btn);
   });
+
+  autoSpeak();
 }
 
 function answer(btn, chosen) {
