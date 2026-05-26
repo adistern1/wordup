@@ -25,7 +25,6 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
 
 .sets-list { width:100%; max-width:420px; display:flex; flex-direction:column; gap:12px; }
 
-/* set card */
 .set-card {
   background:rgba(255,255,255,0.07);
   border:1px solid rgba(255,255,255,0.12);
@@ -50,7 +49,6 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
 }
 .btn-play-set:active { transform:scale(0.96); }
 
-/* add set button */
 .btn-add {
   width:100%; max-width:420px; margin-top:14px;
   padding:16px; border:2px dashed rgba(255,255,255,0.2);
@@ -65,7 +63,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
 
 .add-topbar {
   display:flex; align-items:center; gap:12px;
-  width:100%; max-width:420px; margin-bottom:22px;
+  width:100%; max-width:420px; margin-bottom:16px;
 }
 .btn-back {
   background:none; border:none; color:rgba(255,255,255,0.6);
@@ -73,7 +71,25 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
 }
 .add-topbar h2 { font-size:20px; font-weight:800; }
 
-.add-form { width:100%; max-width:420px; display:flex; flex-direction:column; gap:14px; }
+/* tabs */
+.add-tabs {
+  display:flex; width:100%; max-width:420px;
+  gap:8px; margin-bottom:20px;
+}
+.atab {
+  flex:1; padding:10px 6px;
+  border:1px solid rgba(255,255,255,0.15); border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  color:rgba(255,255,255,0.5); font-size:14px; font-weight:700;
+  cursor:pointer; transition:all .15s;
+}
+.atab.active {
+  background:rgba(124,58,237,0.28);
+  border-color:rgba(192,132,252,0.5);
+  color:#c084fc;
+}
+
+.add-pane { width:100%; max-width:420px; display:flex; flex-direction:column; gap:14px; }
 
 .form-label { font-size:13px; color:rgba(255,255,255,0.55); margin-bottom:4px; }
 
@@ -109,10 +125,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
   display:none;
 }
 .parse-preview.on { display:block; }
-.parse-error {
-  background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3);
-  color:rgba(255,255,255,0.75);
-}
+.parse-error { background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); }
 
 .btn-create {
   padding:16px; border:none; border-radius:16px;
@@ -121,6 +134,63 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
   box-shadow:0 8px 24px rgba(124,58,237,0.45);
 }
 .btn-create:disabled { opacity:0.4; cursor:not-allowed; }
+
+/* ══ PHOTO PANE ══ */
+.photo-meta-row { display:flex; gap:10px; }
+.photo-meta-row > div { flex:1; }
+
+.photo-dropzone {
+  width:100%; padding:32px 16px;
+  border:2px dashed rgba(255,255,255,0.22);
+  border-radius:20px; background:rgba(255,255,255,0.04);
+  text-align:center; cursor:pointer; transition:all .2s;
+}
+.photo-dropzone:active { background:rgba(255,255,255,0.1); border-color:#c084fc; }
+.pdz-icon { font-size:42px; margin-bottom:8px; }
+.pdz-main { color:rgba(255,255,255,0.75); font-size:16px; font-weight:700; }
+.pdz-sub  { font-size:12px; color:rgba(255,255,255,0.35); margin-top:4px; }
+
+.photo-thumb {
+  width:100%; max-height:220px;
+  object-fit:contain; border-radius:14px;
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+.ocr-status {
+  padding:11px 14px;
+  background:rgba(192,132,252,0.1); border:1px solid rgba(192,132,252,0.2);
+  border-radius:12px; font-size:13px; color:rgba(255,255,255,0.85);
+  text-align:center; line-height:1.5;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+.ocr-spin { display:inline-block; animation:spin 1s linear infinite; }
+
+/* word review list */
+.review-hdr {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:6px 2px; font-size:13px; color:rgba(255,255,255,0.65); font-weight:700;
+}
+.review-hint { font-size:11px; color:rgba(255,255,255,0.3); font-weight:400; }
+
+.rrow {
+  display:flex; align-items:center; gap:8px;
+  padding:7px 4px; border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.rrow-e  { font-size:18px; flex-shrink:0; width:26px; text-align:center; }
+.rrow-en { font-size:13px; font-weight:700; flex:1.1; direction:ltr; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rrow-he {
+  flex:1; padding:5px 8px;
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px; color:#fff; font-size:13px; outline:none; min-width:0;
+  direction:rtl; text-align:right;
+}
+.rrow-he:focus { border-color:rgba(192,132,252,0.5); }
+.rrow-he::placeholder { color:rgba(255,255,255,0.25); }
+.rrow-x {
+  background:none; border:none; color:rgba(255,255,255,0.22);
+  font-size:13px; cursor:pointer; flex-shrink:0; padding:4px 2px;
+}
+.rrow-x:active { color:#ef4444; }
 
 /* ══ GAME ══ */
 #s-game { padding-top:14px; justify-content:flex-start; }
@@ -177,7 +247,6 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
 @keyframes opop { 0%{transform:scale(1)} 50%{transform:scale(1.07)} 100%{transform:scale(1)} }
 @keyframes oshk { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-7px)} 75%{transform:translateX(7px)} }
 
-/* mastered flash */
 .mflash {
   position:fixed; top:0; left:0; right:0; bottom:0; z-index:50;
   display:flex; align-items:center; justify-content:center;
@@ -213,7 +282,6 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
   color:rgba(255,255,255,0.65); font-size:14px; font-weight:600; cursor:pointer;
 }
 
-/* confetti */
 .cf { position:fixed; border-radius:2px; pointer-events:none; z-index:200; animation:cfFall linear forwards; }
 @keyframes cfFall { to{transform:translateY(110vh) rotate(720deg);opacity:0;} }
 
@@ -248,7 +316,15 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
     <button class="btn-back" onclick="go('home')">← חזור</button>
     <h2>סט מילים חדש</h2>
   </div>
-  <div class="add-form">
+
+  <!-- Tabs -->
+  <div class="add-tabs">
+    <button class="atab active" id="atab-text"  onclick="switchAddTab('text')">📝 הדבק טקסט</button>
+    <button class="atab"        id="atab-photo" onclick="switchAddTab('photo')">📷 צלם מהספר</button>
+  </div>
+
+  <!-- ── TEXT PANE ── -->
+  <div id="apane-text" class="add-pane">
     <div>
       <div class="form-label">שם הסט</div>
       <input id="setNameInput" class="form-input" type="text" placeholder='לדוגמה: כיתה ו — סט 2' oninput="updatePreview()">
@@ -266,6 +342,45 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
     </div>
     <div class="parse-preview" id="parsePreview"></div>
     <button class="btn-create" id="btnCreate" onclick="createSet()" disabled>✅ צור סט</button>
+  </div>
+
+  <!-- ── PHOTO PANE ── -->
+  <div id="apane-photo" class="add-pane" style="display:none">
+
+    <!-- class + student name -->
+    <div class="photo-meta-row">
+      <div>
+        <div class="form-label">כיתה</div>
+        <input id="photoClass" class="form-input" type="text" placeholder="ה'1" style="text-align:center" oninput="updatePhotoBtnState()">
+      </div>
+      <div>
+        <div class="form-label">שם תלמיד</div>
+        <input id="photoStudent" class="form-input" type="text" placeholder="שם" oninput="updatePhotoBtnState()">
+      </div>
+    </div>
+
+    <!-- hidden file input -->
+    <input type="file" id="photoFile" accept="image/*" style="display:none" onchange="handlePhotoSelect(this)">
+
+    <!-- drop zone -->
+    <div class="photo-dropzone" id="photoDropZone" onclick="document.getElementById('photoFile').click()">
+      <div class="pdz-icon">📷</div>
+      <div class="pdz-main">צלם או בחר תמונה</div>
+      <div class="pdz-sub">דף מהספר / דף מודפס / לוח</div>
+    </div>
+
+    <!-- thumbnail -->
+    <img id="photoThumb" class="photo-thumb" style="display:none" alt="">
+
+    <!-- status -->
+    <div id="ocrStatus" class="ocr-status" style="display:none"></div>
+
+    <!-- word review list -->
+    <div id="wordReviewList"></div>
+
+    <!-- create button -->
+    <button class="btn-create" id="btnCreatePhoto" onclick="createSetFromPhoto()" disabled style="display:none">✅ צור סט</button>
+
   </div>
 </div>
 
@@ -287,7 +402,6 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
   <div class="opts" id="optsGrid"></div>
 </div>
 
-<!-- mastered flash -->
 <div class="mflash" id="mflash">
   <div class="mbadge" id="mbadgeTxt">✅ נלמד!</div>
 </div>
@@ -419,7 +533,6 @@ const DEFAULT_WORDS = [
   {en:"wrote",he:"כתב",p:"פועל עבר",e:"✍️",hint:"wrote a story = כתב סיפור (עבר של write)"},
 ];
 
-/* lookup by english for enriching imported words */
 const BUILT_IN = {};
 DEFAULT_WORDS.forEach(w => { BUILT_IN[w.en.toLowerCase()] = w; });
 
@@ -427,10 +540,7 @@ DEFAULT_WORDS.forEach(w => { BUILT_IN[w.en.toLowerCase()] = w; });
    SETS & STORAGE
 ══════════════════════════════════════════════════ */
 const DEFAULT_SET_ID = 'default';
-
-/* userSets: [{id, name, words[]}] — saved in localStorage */
 let userSets = [];
-/* hits: {setId: {en: 0|1|2}} */
 let allHits  = {};
 
 function loadStorage() {
@@ -442,7 +552,6 @@ function saveStorage() {
   localStorage.setItem('wu6_hits', JSON.stringify(allHits));
 }
 
-/* all sets including built-in */
 function getAllSets() {
   return [
     { id: DEFAULT_SET_ID, name: 'כיתה ו — סט 1 (ברירת מחדל)', words: DEFAULT_WORDS },
@@ -459,7 +568,7 @@ function mastCount(setId, words) {
 }
 
 /* ══════════════════════════════════════════════════
-   IMPORT PARSER
+   TEXT IMPORT PARSER
 ══════════════════════════════════════════════════ */
 function parseWords(text) {
   const lines = text.trim().split('\n');
@@ -470,29 +579,23 @@ function parseWords(text) {
     const parts = raw.split('\t');
     let en='', he='', p='';
     if (parts.length >= 4) {
-      // full format: en | part | category | he | [source]
       en = parts[0].trim(); p = parts[1].trim(); he = parts[3].trim();
     } else if (parts.length >= 2) {
       en = parts[0].trim(); he = parts[1].trim();
       if (parts[2]) p = parts[2].trim();
     } else {
-      // try pipe
       const pp = raw.split('|');
       if (pp.length >= 2) { en = pp[0].trim(); he = pp[1].trim(); }
     }
     if (!en || !he) continue;
-    // enrich from built-in if known
     const known = BUILT_IN[en.toLowerCase()];
-    out.push(known
-      ? { ...known }
-      : { en, he, p, e: '📝', hint: he }
-    );
+    out.push(known ? { ...known } : { en, he, p, e: '📝', hint: he });
   }
   return out;
 }
 
 /* ══════════════════════════════════════════════════
-   HOME SCREEN
+   NAVIGATION
 ══════════════════════════════════════════════════ */
 function go(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
@@ -500,6 +603,13 @@ function go(name) {
   if (name === 'home') renderHome();
 }
 
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ══════════════════════════════════════════════════
+   HOME SCREEN
+══════════════════════════════════════════════════ */
 function renderHome() {
   const list = document.getElementById('setsList');
   list.innerHTML = '';
@@ -508,10 +618,10 @@ function renderHome() {
     const total  = set.words.length;
     const pct    = total ? (mast / total * 100) : 0;
     const almost = set.words.filter(w => (getHits(set.id)[w.en]||0) === 1).length;
+    const isDefault = set.id === DEFAULT_SET_ID;
 
     const card = document.createElement('div');
     card.className = 'set-card';
-    const isDefault = set.id === DEFAULT_SET_ID;
     card.innerHTML = `
       <div class="set-card-top">
         <div class="set-name">📚 ${escHtml(set.name)}</div>
@@ -529,10 +639,6 @@ function renderHome() {
   });
 }
 
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
 function deleteSet(id) {
   if (!confirm('למחוק את הסט הזה?')) return;
   userSets = userSets.filter(s => s.id !== id);
@@ -542,8 +648,18 @@ function deleteSet(id) {
 }
 
 /* ══════════════════════════════════════════════════
-   ADD SET SCREEN
+   ADD SET — TEXT TAB
 ══════════════════════════════════════════════════ */
+let curAddTab = 'text';
+
+function switchAddTab(tab) {
+  curAddTab = tab;
+  document.getElementById('apane-text').style.display  = tab === 'text'  ? '' : 'none';
+  document.getElementById('apane-photo').style.display = tab === 'photo' ? '' : 'none';
+  document.getElementById('atab-text').classList.toggle('active',  tab === 'text');
+  document.getElementById('atab-photo').classList.toggle('active', tab === 'photo');
+}
+
 function updatePreview() {
   const name = document.getElementById('setNameInput').value.trim();
   const text = document.getElementById('wordsInput').value;
@@ -574,11 +690,231 @@ function createSet() {
   userSets.push({ id, name, words });
   saveStorage();
 
-  // reset form
   document.getElementById('setNameInput').value = '';
   document.getElementById('wordsInput').value   = '';
   document.getElementById('parsePreview').className = 'parse-preview';
   document.getElementById('btnCreate').disabled = true;
+
+  go('home');
+}
+
+/* ══════════════════════════════════════════════════
+   ADD SET — PHOTO TAB
+══════════════════════════════════════════════════ */
+let photoWords = [];
+
+async function handlePhotoSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  input.value = '';
+
+  // Show thumbnail
+  const thumb = document.getElementById('photoThumb');
+  thumb.src = URL.createObjectURL(file);
+  thumb.style.display = 'block';
+
+  photoWords = [];
+  document.getElementById('wordReviewList').innerHTML = '';
+  document.getElementById('btnCreatePhoto').style.display = 'none';
+
+  setOcrStatus('🔍 שולח תמונה לניתוח...', true);
+
+  try {
+    const resized = await resizeImage(file, 1600);
+    const text    = await ocrImage(resized);
+
+    const rawWords = extractWordsFromOCRText(text);
+    if (!rawWords.length) {
+      setOcrStatus('❌ לא זוהו מילים בתמונה. נסה תמונה ברורה יותר.', false);
+      return;
+    }
+
+    setOcrStatus(`✅ זוהו ${rawWords.length} מילים. מתרגם...`, true);
+
+    const toTranslate = [];
+    for (const en of rawWords) {
+      const known = BUILT_IN[en.toLowerCase()];
+      if (known) {
+        photoWords.push({ ...known });
+      } else {
+        const w = { en, he: '', p: '', e: '📝', hint: '' };
+        photoWords.push(w);
+        toTranslate.push(w);
+      }
+    }
+
+    renderWordReview();
+
+    if (toTranslate.length > 0) {
+      await translateBatch(toTranslate);
+    }
+
+    setOcrStatus(`✅ ${photoWords.length} מילים — ניתן לערוך ולמחוק`, false);
+    document.getElementById('btnCreatePhoto').style.display = '';
+    updatePhotoBtnState();
+
+  } catch(err) {
+    setOcrStatus('❌ שגיאה בניתוח: ' + (err.message || 'נסה שוב'), false);
+  }
+}
+
+/* Resize image via canvas before upload */
+function resizeImage(file, maxPx) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      let w = img.width, h = img.height;
+      if (w > maxPx || h > maxPx) {
+        if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+        else       { w = Math.round(w * maxPx / h); h = maxPx; }
+      }
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      c.toBlob(blob => resolve(blob || file), 'image/jpeg', 0.88);
+    };
+    img.onerror = () => resolve(file);
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+/* OCR via OCR.space free API */
+async function ocrImage(blob) {
+  const fd = new FormData();
+  fd.append('file', blob, 'page.jpg');
+  fd.append('apikey', 'helloworld');
+  fd.append('language', 'eng');
+  fd.append('scale', 'true');
+  fd.append('isTable', 'true');
+  fd.append('OCREngine', '2');
+
+  const res = await fetch('https://api.ocr.space/parse/image', { method:'POST', body:fd });
+  if (!res.ok) throw new Error('שגיאת רשת');
+  const data = await res.json();
+  if (data.IsErroredOnProcessing) throw new Error(data.ErrorMessage?.[0] || 'OCR error');
+  if (!data.ParsedResults?.length)  throw new Error('no results');
+  return data.ParsedResults[0].ParsedText || '';
+}
+
+/* Extract English words/phrases from OCR text */
+function extractWordsFromOCRText(text) {
+  const STOP = new Set([
+    'a','an','the','is','are','was','were','it','to','of','in','on','at','be','by',
+    'or','if','up','as','do','go','no','so','we','he','she','they','you','i','me',
+    'my','his','her','our','its','not','for','and','but','n','s','r','parts','check',
+    'unit','look','find','least','two','words','phrases','each','following','which',
+    'word','doesn','follow','bold','choose','correct','answers'
+  ]);
+
+  const seen = new Set();
+  const out  = [];
+
+  for (const rawLine of text.split('\n')) {
+    // split on 2+ spaces or tabs (column separators)
+    for (const chunk of rawLine.split(/\t|\s{2,}/)) {
+      let w = chunk.trim().toLowerCase();
+      // keep letters, spaces, apostrophes, hyphens, parentheses
+      w = w.replace(/[^a-z\s()'.-]/g, '').replace(/\s+/g, ' ').trim();
+      if (w.length < 2)         continue;
+      if (!/[a-z]{2}/.test(w)) continue;
+      if (STOP.has(w))          continue;
+      if (seen.has(w))          continue;
+      // skip lines that are clearly sentences (>5 words)
+      if (w.split(' ').length > 5) continue;
+      seen.add(w);
+      out.push(w);
+    }
+  }
+
+  return out;
+}
+
+/* Auto-translate unknown words via MyMemory */
+async function translateBatch(wordObjs) {
+  for (let i = 0; i < wordObjs.length; i++) {
+    const w = wordObjs[i];
+    try {
+      const r = await fetch(
+        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(w.en)}&langpair=en|he`
+      );
+      const d = await r.json();
+      if (d.responseStatus === 200) {
+        const t = (d.responseData.translatedText || '').trim();
+        // sanity-check: should contain Hebrew chars
+        if (t && /[א-ת]/.test(t)) {
+          w.he = t; w.hint = t;
+        }
+      }
+    } catch(e) {}
+
+    if (i % 5 === 4) renderWordReview();
+    await pause(140);
+  }
+  renderWordReview();
+}
+
+function pause(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function setOcrStatus(msg, loading) {
+  const el = document.getElementById('ocrStatus');
+  el.style.display = '';
+  el.innerHTML = loading
+    ? `<span class="ocr-spin">⏳</span> ${escHtml(msg)}`
+    : escHtml(msg);
+}
+
+function renderWordReview() {
+  const list = document.getElementById('wordReviewList');
+  if (!photoWords.length) { list.innerHTML = ''; return; }
+
+  list.innerHTML = `
+    <div class="review-hdr">
+      <span>${photoWords.length} מילים זוהו</span>
+      <span class="review-hint">ניתן לערוך / למחוק</span>
+    </div>
+    ${photoWords.map((w,i) => `
+      <div class="rrow">
+        <span class="rrow-e">${w.e}</span>
+        <span class="rrow-en">${escHtml(w.en)}</span>
+        <input class="rrow-he" value="${escHtml(w.he)}" placeholder="תרגום..."
+          oninput="photoWords[${i}].he=this.value;updatePhotoBtnState()">
+        <button class="rrow-x" onclick="photoWords.splice(${i},1);renderWordReview();updatePhotoBtnState()">✕</button>
+      </div>`).join('')}`;
+}
+
+function updatePhotoBtnState() {
+  const hasName = document.getElementById('photoClass').value.trim() ||
+                  document.getElementById('photoStudent').value.trim();
+  const hasWords = photoWords.some(w => w.he && w.he.trim());
+  const btn = document.getElementById('btnCreatePhoto');
+  if (btn.style.display !== 'none') btn.disabled = !(hasName && hasWords);
+}
+
+function createSetFromPhoto() {
+  const cls = document.getElementById('photoClass').value.trim();
+  const stu = document.getElementById('photoStudent').value.trim();
+
+  let name = '';
+  if (cls && stu)  name = `כיתה ${cls} — ${stu}`;
+  else if (cls)    name = `כיתה ${cls}`;
+  else if (stu)    name = stu;
+  else             name = 'סט מתמונה';
+
+  const words = photoWords.filter(w => w.he && w.he.trim());
+  if (!words.length) return;
+
+  const id = 'set_' + Date.now();
+  userSets.push({ id, name, words });
+  saveStorage();
+
+  // reset photo pane
+  photoWords = [];
+  document.getElementById('photoClass').value   = '';
+  document.getElementById('photoStudent').value = '';
+  document.getElementById('photoThumb').style.display = 'none';
+  document.getElementById('ocrStatus').style.display  = 'none';
+  document.getElementById('wordReviewList').innerHTML  = '';
+  document.getElementById('btnCreatePhoto').style.display = 'none';
 
   go('home');
 }
@@ -654,8 +990,7 @@ function renderWord() {
   document.getElementById('d0').className = 'hdot' + (hits >= 1 ? ' on' : '');
   document.getElementById('d1').className = 'hdot' + (hits >= 2 ? ' on' : '');
 
-  // pick wrong answers from the same set (or fall back to all words)
-  const pool = curWords.length >= 4 ? curWords : DEFAULT_WORDS;
+  const pool  = curWords.length >= 4 ? curWords : DEFAULT_WORDS;
   const others = shuffle(pool.filter(x => x.en !== w.en)).slice(0, 3);
   const opts   = shuffle([w, ...others]);
   const grid   = document.getElementById('optsGrid');
@@ -738,7 +1073,7 @@ function speakWord() {
 function autoSpeak() { setTimeout(speakWord, 400); }
 
 /* ══════════════════════════════════════════════════
-   AUDIO BEEPS
+   AUDIO
 ══════════════════════════════════════════════════ */
 let actx;
 function beep(f,d,t='sine',v=0.25) {
