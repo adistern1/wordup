@@ -986,9 +986,12 @@ function renderWord() {
   document.getElementById('gTotal').textContent   = curWords.length;
   document.getElementById('gbar').style.width     = (mast / curWords.length * 100) + '%';
 
-  document.getElementById('wcEmoji').textContent  = w.e || '📝';
-  document.getElementById('wcPart').textContent   = w.p || '';
-  document.getElementById('hintBox').textContent  = (w.hint && w.hint !== w.he) ? w.hint : '';
+  const firstTime = hits === 0;
+  const emojiEl = document.getElementById('wcEmoji');
+  emojiEl.textContent  = w.e || '📝';
+  emojiEl.style.display = firstTime ? '' : 'none';
+  document.getElementById('wcPart').textContent   = firstTime ? (w.p || '') : '';
+  document.getElementById('hintBox').textContent  = firstTime ? (w.hint || '') : '';
 
   const el = document.getElementById('wcWord');
   el.textContent = w.en;
