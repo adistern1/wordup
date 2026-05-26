@@ -32,8 +32,10 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
 }
 .set-card-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
 .set-name { font-size:16px; font-weight:800; }
-.set-del { background:none; border:none; color:rgba(255,255,255,0.3); font-size:18px; cursor:pointer; padding:0 4px; }
+.set-del   { background:none; border:none; color:rgba(255,255,255,0.3); font-size:18px; cursor:pointer; padding:0 4px; }
 .set-del:active { color:#ef4444; }
+.set-share { background:none; border:none; color:rgba(255,255,255,0.3); font-size:18px; cursor:pointer; padding:0 4px; }
+.set-share:active { color:#38bdf8; }
 
 .set-bar-wrap { height:6px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden; margin-bottom:8px; }
 .set-bar { height:100%; background:linear-gradient(90deg,#10b981,#c084fc); border-radius:3px; transition:width .6s ease; }
@@ -289,6 +291,16 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
 
 ::-webkit-scrollbar { width:3px; }
 ::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.15); border-radius:2px; }
+
+/* toast */
+.toast {
+  position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:rgba(30,20,70,0.96); border:1px solid rgba(255,255,255,0.15);
+  border-radius:14px; padding:12px 22px;
+  font-size:14px; font-weight:600; color:#fff;
+  z-index:300; opacity:0; transition:all .3s; white-space:nowrap; pointer-events:none;
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -309,6 +321,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
     <div class="subtitle">לימוד מילות אנגלית</div>
   </div>
   <div class="sets-list" id="setsList"></div>
+<div class="toast" id="toast"></div>
   <button class="btn-add" onclick="go('add')">＋ הוסף סט מילים חדש</button>
 </div>
 
@@ -627,7 +640,10 @@ function renderHome() {
     card.innerHTML = `
       <div class="set-card-top">
         <div class="set-name">📚 ${escHtml(set.name)}</div>
-        ${isDefault ? '' : `<button class="set-del" onclick="deleteSet('${set.id}')" title="מחק סט">🗑</button>`}
+        <div style="display:flex;gap:2px">
+          <button class="set-share" onclick="shareSet('${set.id}')" title="שתף סט">📤</button>
+          ${isDefault ? '' : `<button class="set-del" onclick="deleteSet('${set.id}')" title="מחק סט">🗑</button>`}
+        </div>
       </div>
       <div class="set-bar-wrap"><div class="set-bar" style="width:${pct}%"></div></div>
       <div class="set-stats">
@@ -647,6 +663,72 @@ function deleteSet(id) {
   delete allHits[id];
   saveStorage();
   renderHome();
+}
+
+/* ══════════════════════════════════════════════════
+   SHARE / IMPORT VIA URL
+══════════════════════════════════════════════════ */
+function shareSet(id) {
+  const set = getAllSets().find(s => s.id === id);
+  if (!set) return;
+
+  // Compact encode: "name\nen|he\nen|he..."
+  const lines = [set.name, ...set.words.map(w => `${w.en}|${w.he}`)].join('\n');
+  const encoded = btoa(unescape(encodeURIComponent(lines)));
+  const url = location.origin + location.pathname + '?s=' + encoded;
+
+  if (navigator.share) {
+    navigator.share({ title: 'WordUp — ' + set.name, url })
+      .catch(() => copyToClipboard(url));
+  } else {
+    copyToClipboard(url);
+  }
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('📋 הקישור הועתק — שלח בוואטסאפ!'))
+    .catch(() => {
+      prompt('העתק את הקישור:', text);
+    });
+}
+
+function showToast(msg, ms = 3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), ms);
+}
+
+function importFromURL() {
+  const params = new URLSearchParams(location.search);
+  const s = params.get('s');
+  if (!s) return;
+
+  try {
+    const lines = decodeURIComponent(escape(atob(s))).split('\n');
+    const name  = lines[0];
+    const words = [];
+    for (let i = 1; i < lines.length; i++) {
+      const [en, he] = lines[i].split('|');
+      if (!en || !he) continue;
+      const known = BUILT_IN[en.toLowerCase()];
+      words.push(known ? { ...known } : { en, he, p:'', e:'📝', hint: he });
+    }
+    if (name && words.length) {
+      const alreadyHave = userSets.some(x => x.name === name);
+      if (!alreadyHave) {
+        userSets.push({ id: 'set_' + Date.now(), name, words });
+        saveStorage();
+        showToast(`✅ הסט "${name}" נוסף!`);
+        renderHome();
+      } else {
+        showToast(`הסט "${name}" כבר קיים`);
+      }
+    }
+  } catch(e) {}
+
+  history.replaceState(null, '', location.pathname);
 }
 
 /* ══════════════════════════════════════════════════
@@ -1131,6 +1213,7 @@ function confetti(n) {
    INIT
 ══════════════════════════════════════════════════ */
 loadStorage();
+importFromURL();
 renderHome();
 </script>
 </body>
