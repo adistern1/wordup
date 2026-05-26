@@ -100,6 +100,8 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color
 }
 .form-input:focus { border-color:rgba(192,132,252,0.5); }
 .form-input::placeholder { color:rgba(255,255,255,0.3); }
+.form-input.needs-name { border-color:rgba(251,191,36,0.7); animation:pulse-border 1.2s ease-in-out 2; }
+@keyframes pulse-border { 0%,100%{border-color:rgba(251,191,36,0.7)} 50%{border-color:rgba(251,191,36,1); box-shadow:0 0 10px rgba(251,191,36,0.4)} }
 
 .format-tip {
   background:rgba(192,132,252,0.1); border:1px solid rgba(192,132,252,0.2);
@@ -677,6 +679,12 @@ function updatePreview() {
     prev.className = 'parse-preview on';
     prev.textContent = `✅ זוהו ${words.length} מילים. ${words.filter(w=>w.e!=='📝').length} עם אימוג'י+רמז מובנה.`;
     btn.disabled = !name;
+    if (!name) {
+      const inp = document.getElementById('setNameInput');
+      inp.classList.add('needs-name');
+      inp.focus();
+      setTimeout(() => inp.classList.remove('needs-name'), 3000);
+    }
   }
 }
 
