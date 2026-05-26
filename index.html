@@ -1139,18 +1139,15 @@ function renderTypeWord() {
   const h    = getHits(typeSetId);
   const mast = mastCount(typeSetId, typeWords);
   const hits = h[w.en] || 0;
-  const first = hits === 0;
 
   document.getElementById('tSetName').textContent = typeSetName;
   document.getElementById('tMastN').textContent   = mast;
   document.getElementById('tTotal').textContent   = typeWords.length;
   document.getElementById('tbar').style.width     = (mast / typeWords.length * 100) + '%';
 
-  const emojiEl = document.getElementById('tEmoji');
-  emojiEl.textContent   = w.e || '📝';
-  emojiEl.style.display = first ? '' : 'none';
-  document.getElementById('tPart').textContent = first ? (w.p || '') : '';
-  document.getElementById('tHint').textContent = first ? (w.hint || '') : '';
+  document.getElementById('tEmoji').style.display = 'none';
+  document.getElementById('tPart').textContent    = '';
+  document.getElementById('tHint').textContent    = '';
 
   const el = document.getElementById('tWord');
   el.textContent = w.en;
@@ -1313,13 +1310,10 @@ function renderWord() {
   document.getElementById('gbar').style.width     = (mast / curWords.length * 100) + '%';
 
   const hits = h[w.en] || 0;
-  const firstTime = hits === 0;
 
-  const emojiEl = document.getElementById('wcEmoji');
-  emojiEl.textContent  = w.e || '📝';
-  emojiEl.style.display = firstTime ? '' : 'none';
-  document.getElementById('wcPart').textContent   = firstTime ? (w.p || '') : '';
-  document.getElementById('hintBox').textContent  = firstTime ? (w.hint || '') : '';
+  document.getElementById('wcEmoji').style.display = 'none';
+  document.getElementById('wcPart').textContent    = '';
+  document.getElementById('hintBox').textContent   = '';
 
   const el = document.getElementById('wcWord');
   el.textContent = w.en;
