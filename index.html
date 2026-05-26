@@ -1068,7 +1068,9 @@ function renderWord() {
   document.getElementById('gTotal').textContent   = curWords.length;
   document.getElementById('gbar').style.width     = (mast / curWords.length * 100) + '%';
 
+  const hits = h[w.en] || 0;
   const firstTime = hits === 0;
+
   const emojiEl = document.getElementById('wcEmoji');
   emojiEl.textContent  = w.e || '📝';
   emojiEl.style.display = firstTime ? '' : 'none';
@@ -1079,7 +1081,6 @@ function renderWord() {
   el.textContent = w.en;
   el.style.fontSize = w.en.length > 14 ? '24px' : w.en.length > 9 ? '32px' : '42px';
 
-  const hits = h[w.en] || 0;
   document.getElementById('d0').className = 'hdot' + (hits >= 1 ? ' on' : '');
   document.getElementById('d1').className = 'hdot' + (hits >= 2 ? ' on' : '');
 
